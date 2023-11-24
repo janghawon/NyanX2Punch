@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using DG.Tweening;
+using UnityEngine.Events;
 
 public class MonsterCard : CardBase
 {
@@ -10,6 +12,13 @@ public class MonsterCard : CardBase
     [SerializeField] private SpriteRenderer[] _srGroup;
     [SerializeField] private TextMeshPro[] _tmpGroup;
 
+    [SerializeField] private UnityEvent<int, TextMeshPro> HandleHitEvent;
+
+    public int currentATK;
+    public int currentHP;
+    public string cardName;
+    public TribeType tribe;
+
     private void Start()
     {
         if(TryGetComponent<AttackCard>(out AttackCard a))
@@ -17,6 +26,18 @@ public class MonsterCard : CardBase
             _attackCard = a;
             _canAttack = true;
         }
+
+        Vector2 normalScalevalue = transform.localScale;
+        transform.localScale = new Vector2(1.718f, 2.39f);
+        transform.DOScale(normalScalevalue, 0.3f);
+    }
+
+    public void SetStatus(MonsterCardDataSO cardData)
+    {
+        currentATK = cardData.Atk;
+        currentHP = cardData.HP;
+        cardName = cardData.NAME;
+        tribe = cardData.tribeType;
     }
 
     private void OnMouseDown()
@@ -30,7 +51,6 @@ public class MonsterCard : CardBase
             _isDragging = true;
         }
     }
-
     private void OnMouseUp()
     {
         if (!_canAttack || playerType == PlayerType.Enemy) return;
@@ -42,7 +62,7 @@ public class MonsterCard : CardBase
             if(CardManager.Instanace.selectAtkCard.TryGetComponent<HPCard>(out HPCard h))
             {
                 CardManager.Instanace.SetSiblingCard(10, _srGroup, _tmpGroup);
-                _attackCard.Attack(transform, h.transform.position, h, _srGroup, _tmpGroup);
+                _attackCard.Attack(h, _srGroup, _tmpGroup);
             }
         }
         _attackCard.AttackCancle(transform);

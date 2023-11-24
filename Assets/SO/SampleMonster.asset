@@ -16,3 +16,8 @@ MonoBehaviour:
   handCardPrefab: {fileID: 3903217641587565403, guid: 5d5ef9dfe0e6f8447bb33e4a014fca3c, type: 3}
   cardBase: {fileID: -4407427808638216872, guid: b8a45aac4da61054980c3060832b2866, type: 3}
   tribeType: 0
+  Atk: 5
+  HP: 2
+  COST: 3
+  NAME: 
+  INFO: 

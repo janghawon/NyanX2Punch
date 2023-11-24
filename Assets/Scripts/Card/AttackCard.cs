@@ -7,6 +7,7 @@ using TMPro;
 public class AttackCard : MonoBehaviour
 {
     private bool _isAttacking;
+    private Vector2 _atkPos;
 
     public void AttackReady(Transform trm)
     {
@@ -22,18 +23,28 @@ public class AttackCard : MonoBehaviour
         trm.DOScale(new Vector3(1.8f, 2.05f), 0.1f);
     }
 
-    public void Attack(Transform trm, Vector2 target, HPCard cardHP ,SpriteRenderer[] srs, TextMeshPro[] tmps)
+    public void Attack(HPCard cardHP, SpriteRenderer[] srs, TextMeshPro[] tmps)
     {
-        Vector2 myPos = trm.position;
+        Vector2 myPos = transform.position;
+        _atkPos = cardHP.hitPos.position;
         _isAttacking = true;
 
         Sequence seq = DOTween.Sequence();
-        seq.Append(trm.DOMove(target, 0.2f));
-        seq.Append(trm.DOMove(myPos, 0.4f));
+        seq.Append(transform.DOMove(_atkPos, 0.2f));
+        seq.AppendCallback(() => AttackLogic(cardHP));
+        seq.Join(transform.DOMove(myPos, 0.7f));
         seq.AppendCallback(() =>
         {
             _isAttacking = false;
             CardManager.Instanace.SetSiblingCard(-10, srs, tmps);
         });
+    }
+
+    public void AttackLogic(HPCard hp)
+    {
+        FeedbackManager.Instanace.MakeVFX(VFXType.smoke, _atkPos);
+        FeedbackManager.Instanace.ShakeScreen();
+
+        hp.DealDamage(10);
     }
 }

@@ -25,3 +25,8 @@ public enum PlayerType
     Owner,
     Enemy
 }
+
+public enum VFXType
+{
+    smoke
+}
