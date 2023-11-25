@@ -24,6 +24,9 @@ public class CardManager : MonoBehaviour
     public Hand _hand;
     [SerializeField] private LayerMask _cardZoneMark;
 
+    public List<CardDataSO> OnFieldCardList = new List<CardDataSO>();
+    public List<CardDataSO> OnDestroyCardList = new List<CardDataSO>();
+
     private void Awake()
     {
         _hand = GameObject.Find("MyHand").GetComponent<Hand>();
@@ -40,10 +43,9 @@ public class CardManager : MonoBehaviour
 
         return null;
     }
-    public void SetMonsterCard(CardZone cardZone)
+    public void SetMonsterCard(CardZone cardZone, PlayerType pType)
     {
-        Instantiate(selectCard.cardBase, cardZone.transform.position, Quaternion.identity);
-        cardZone.canEmplaceCard = false;
+        Instantiate(selectCard.cardBase, cardZone.transform.position, Quaternion.identity).playerType = pType;
     }
     public void UseCard(HandCard useCard)
     {

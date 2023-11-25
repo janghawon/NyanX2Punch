@@ -38,4 +38,11 @@ public class FeedbackManager : MonoBehaviour
     {
         Instantiate(_vfxList[(int)vType], spawnPos, Quaternion.identity);
     }
+
+    public void MakeVFX(VFXType vType, Vector2 spawnPos, Vector2 dir)
+    {
+        dir.Normalize();
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Instantiate(_vfxList[(int)vType], spawnPos, Quaternion.AngleAxis(angle, Vector3.forward));
+    }
 }

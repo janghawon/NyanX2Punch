@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 35462779}
   - component: {fileID: 35462780}
+  - component: {fileID: 35462781}
   m_Layer: 0
   m_Name: CardPos_4
   m_TagString: Untagged
@@ -207,6 +208,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &35462781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35462778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0729f905d46c84d4585cd8ff3e7c7e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canEmplaceCard: 0
 --- !u!1 &134255223
 GameObject:
   m_ObjectHideFlags: 0
@@ -2831,6 +2845,52 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &179685888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 179685890}
+  - component: {fileID: 179685889}
+  m_Layer: 0
+  m_Name: TestScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &179685889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179685888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aa9280af1f29c94181c598ae65a53ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardZone: {fileID: 754770891}
+  _myCardData: {fileID: 11400000, guid: bf19cecdd5229124e8779b3bfe1de36c, type: 2}
+--- !u!4 &179685890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 179685888}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &303796346
 GameObject:
   m_ObjectHideFlags: 3
@@ -3224,6 +3284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 496350012}
   - component: {fileID: 496350013}
+  - component: {fileID: 496350014}
   m_Layer: 0
   m_Name: CardPos_1
   m_TagString: Untagged
@@ -3298,6 +3359,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &496350014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496350011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0729f905d46c84d4585cd8ff3e7c7e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canEmplaceCard: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -3310,6 +3384,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3425,6 +3500,50 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &596850951
 GameObject:
   m_ObjectHideFlags: 0
@@ -3625,7 +3744,7 @@ Transform:
   m_GameObject: {fileID: 681201423}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.39, y: -0.36, z: 0}
+  m_LocalPosition: {x: -2.37, y: -0.36, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3646,6 +3765,7 @@ GameObject:
   m_Component:
   - component: {fileID: 754770889}
   - component: {fileID: 754770890}
+  - component: {fileID: 754770891}
   m_Layer: 0
   m_Name: CardPos_3
   m_TagString: Untagged
@@ -3720,6 +3840,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &754770891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754770888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0729f905d46c84d4585cd8ff3e7c7e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canEmplaceCard: 0
 --- !u!1 &812446095
 GameObject:
   m_ObjectHideFlags: 0
@@ -4063,6 +4196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1163611634}
   - component: {fileID: 1163611635}
+  - component: {fileID: 1163611636}
   m_Layer: 0
   m_Name: CardPos_2
   m_TagString: Untagged
@@ -4137,6 +4271,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1163611636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163611633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0729f905d46c84d4585cd8ff3e7c7e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canEmplaceCard: 0
 --- !u!1 &1221421589
 GameObject:
   m_ObjectHideFlags: 0
@@ -4168,73 +4315,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1356352997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1224540819
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -4407427808638216872, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: playerType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.27
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.88
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8618175770238954589, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8636243522322143245, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      propertyPath: m_Name
-      value: FieldCardBase
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3116787791361171113, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 6419453866979911318, guid: b8a45aac4da61054980c3060832b2866, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-  m_SourcePrefab: {fileID: 100100000, guid: b8a45aac4da61054980c3060832b2866, type: 3}
 --- !u!1 &1272084625
 GameObject:
   m_ObjectHideFlags: 0
@@ -4245,6 +4325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1272084626}
   - component: {fileID: 1272084627}
+  - component: {fileID: 1272084628}
   m_Layer: 0
   m_Name: CardPos_5
   m_TagString: Untagged
@@ -4319,6 +4400,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1272084628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1272084625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0729f905d46c84d4585cd8ff3e7c7e77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canEmplaceCard: 0
 --- !u!1 &1319435587
 GameObject:
   m_ObjectHideFlags: 0
@@ -4480,8 +4574,8 @@ Transform:
   m_GameObject: {fileID: 1353472180}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.4, z: 0}
-  m_LocalScale: {x: 15, y: 3.2, z: 1}
+  m_LocalPosition: {x: -0.4888, y: -1.4, z: 0}
+  m_LocalScale: {x: 14.022568, y: 3.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -4814,6 +4908,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _vfxList:
   - {fileID: 4226788351534347302, guid: bfffd5f7bfa7ee249bd57930ff60547b, type: 3}
+  - {fileID: -4352416025930405440, guid: 08986e8ba41f5194f98f37d83f21dc1d, type: 3}
+  - {fileID: 5482167223141193738, guid: c4397c7abedd606489474a684d398400, type: 3}
 --- !u!1 &1884662152
 GameObject:
   m_ObjectHideFlags: 0
@@ -4935,7 +5031,7 @@ Transform:
   m_GameObject: {fileID: 2006028349}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.39, y: 2.95, z: 0}
+  m_LocalPosition: {x: -2.37, y: 2.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5125,8 +5221,8 @@ Transform:
   m_GameObject: {fileID: 2070641997}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
-  m_LocalScale: {x: 15, y: 3.2, z: 1}
+  m_LocalPosition: {x: -0.4888, y: 2, z: 0}
+  m_LocalScale: {x: 14.022568, y: 3.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -5142,7 +5238,7 @@ GameObject:
   - component: {fileID: 2120941399}
   - component: {fileID: 2120941400}
   m_Layer: 0
-  m_Name: FieldCardManager
+  m_Name: CardManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5175,12 +5271,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f48b4f0d49658947ad7e7432eaf1955, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectCard: {fileID: 0}
+  selectCard: {fileID: 11400000, guid: bf19cecdd5229124e8779b3bfe1de36c, type: 2}
   selectAtkCard: {fileID: 0}
   _hand: {fileID: 1356352998}
   _cardZoneMark:
     serializedVersion: 2
     m_Bits: 64
+  OnFieldCardList: []
+  OnDestroyCardList: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -5189,10 +5287,10 @@ SceneRoots:
   - {fileID: 1099814477}
   - {fileID: 1319435588}
   - {fileID: 882511746}
+  - {fileID: 179685890}
   - {fileID: 2070641999}
   - {fileID: 1353472182}
   - {fileID: 1409217169}
   - {fileID: 1356352997}
-  - {fileID: 1224540819}
   - {fileID: 2049206644}
   - {fileID: 1884662155}

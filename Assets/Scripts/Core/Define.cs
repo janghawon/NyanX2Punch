@@ -28,5 +28,7 @@ public enum PlayerType
 
 public enum VFXType
 {
-    smoke
+    smoke,
+    Destroy,
+    Impact
 }

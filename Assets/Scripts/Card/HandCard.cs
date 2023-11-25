@@ -72,7 +72,7 @@ public class HandCard : MonoBehaviour
         CardZone cardZone = CardManager.Instanace.OnMouseDetectZone(transform.position);
         if(cardZone != null)
         {
-            CardManager.Instanace.SetMonsterCard(cardZone);
+            CardManager.Instanace.SetMonsterCard(cardZone, PlayerType.Owner);
             CardManager.Instanace.UseCard(this);
         }
         else
