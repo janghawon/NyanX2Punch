@@ -78,7 +78,7 @@ public class HostGameManager : IDisposable
 
     public void Dispose()
     {
-        ShutDownAsync();
+        ShutdownAsync();
     }
 
     public async void ShutdownAsync()
@@ -92,6 +92,7 @@ public class HostGameManager : IDisposable
 
             try
             {
+                Debug.Log("dsd");
                 await Lobbies.Instance.DeleteLobbyAsync(_lobbyID);
             }
             catch(LobbyServiceException ex)
@@ -100,14 +101,6 @@ public class HostGameManager : IDisposable
             }
         }
 
-        NetServer.OnClientLeft -= HandleClinetLeft;
-        NetServer.OnClientJoin -= HandleClientJoin;
-        _lobbyID = string.Empty;
-        NetServer?.Dispose();
-    }
-
-    public async void ShutDownAsync()
-    {
         NetServer.OnClientLeft -= HandleClinetLeft;
         NetServer.OnClientJoin -= HandleClientJoin;
         _lobbyID = string.Empty;

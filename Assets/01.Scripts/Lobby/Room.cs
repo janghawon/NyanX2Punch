@@ -11,6 +11,7 @@ public class Room
     public event Action<string> MakeLobbyBtnEvent;
     private bool _isLobbyRefresh = false;
     public event Action<Lobby> JoinRoomEvent;
+    public event Action<Lobby> DestroyRoomEvent;
 
     private Transform _roomElement;
     private Transform _content;
@@ -37,9 +38,9 @@ public class Room
 
         var list = await ApplicationController.Instance.GetLobbyList();
 
-        foreach(GameObject exist in _content)
+        foreach(Transform exist in _content)
         {
-            GameObject.Destroy(exist);
+            GameObject.Destroy(exist.gameObject);
         }
 
         foreach (var lobby in list)
@@ -54,8 +55,14 @@ public class Room
                 Button btn = lobyTemplate.Find("EnterBtn").GetComponent<Button>();
                 if(lobby.HostId == lobby.Players[i].Id)
                 {
+                    Image btnImg = btn.GetComponent<Image>();
+                    btnImg.color = Color.red;
+
                     TextMeshProUGUI text = btn.transform.Find("ParticipateTxt").GetComponent<TextMeshProUGUI>();
-                    text.text = "참가 중";
+                    text.text = "로비 삭제";
+                    text.color = Color.white;
+
+                    btn.onClick.AddListener(() => DestroyRoomEvent?.Invoke(lobby));
                 }
                 else
                 {

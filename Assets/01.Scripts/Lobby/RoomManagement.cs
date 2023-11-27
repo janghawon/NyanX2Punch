@@ -12,7 +12,8 @@ using UnityEngine.UI;
 
 public class RoomManagement : MonoBehaviour
 {
-    private bool _isWaiting = false;
+    private bool _isJoinWaiting = false;
+    private bool _isDestroyWaiting = false;
     public const string nameKey = "userName";
 
     [SerializeField] private Transform _canvasTrm;
@@ -31,13 +32,19 @@ public class RoomManagement : MonoBehaviour
 
         _myRoom = new Room(_roomElement, _content, _refreshBtn);
         _myRoom.JoinRoomEvent += HandleJoinToRoom;
+        _myRoom.DestroyRoomEvent += HandleDestroyRoom;
+    }
 
+    private async void HandleDestroyRoom(Lobby room)
+    {
+        if (_isDestroyWaiting) return;
+        _isDestroyWaiting = true;
     }
 
     private async void HandleJoinToRoom(Lobby room)
     {
-        if (_isWaiting) return;
-        _isWaiting = true;
+        if (_isJoinWaiting) return;
+        _isJoinWaiting = true;
         try
         {
             Lobby joiningLobby = await Lobbies.Instance.JoinLobbyByIdAsync(room.Id);
@@ -52,7 +59,7 @@ public class RoomManagement : MonoBehaviour
         }
         finally
         {
-            _isWaiting = false;
+            _isJoinWaiting = false;
         }
     }
 
@@ -71,8 +78,8 @@ public class RoomManagement : MonoBehaviour
     }
     public async void HandleCreateLobby(string roomName, Action panelEndFunc, TextMeshProUGUI syntex)
     {
-        if (_isWaiting) return;
-        _isWaiting = true;
+        if (_isJoinWaiting) return;
+        _isJoinWaiting = true;
 
         string username = PlayerPrefs.GetString(nameKey);
         bool result = await ApplicationController.Instance.StartHostAsync(username, roomName);
@@ -89,6 +96,6 @@ public class RoomManagement : MonoBehaviour
             syntex.color = Color.red;
         }
 
-        _isWaiting = false;
+        _isJoinWaiting = false;
     }
 }

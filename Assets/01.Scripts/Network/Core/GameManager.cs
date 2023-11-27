@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -179,9 +180,10 @@ public class GameManager : NetworkBehaviour
     public void GameStart()
     {
         if (!IsHost) return;
-        if(_readyUserCount >= 1)
+        if(_readyUserCount == 2)
         {
             StartGameClientRpc();
+            SceneManager.LoadScene(SceneList.GameScene);
         }
         else
         {
