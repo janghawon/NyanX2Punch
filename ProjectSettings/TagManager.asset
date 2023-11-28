@@ -41,15 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: UI
-    uniqueID: 3345452965
+  - name: Background
+    uniqueID: 2073390767
     locked: 0
-  - name: Card
-    uniqueID: 3537722803
-    locked: 0
-  - name: FX
-    uniqueID: 1214901121
-    locked: 0
-  - name: New Layer 4
-    uniqueID: 356979749
+  - name: Player
+    uniqueID: 2144071
     locked: 0

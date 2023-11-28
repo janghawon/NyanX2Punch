@@ -23,9 +23,9 @@ public class HostSingleton : MonoBehaviour
     
     public HostGameManager GamaManager { get; private set; }
 
-    public void CreateHost()
+    public void CreateHost(NetworkObject playPrefab)
     {
-        GamaManager = new HostGameManager();
+        GamaManager = new HostGameManager(playPrefab);
     }
 
     private void OnDestroy()

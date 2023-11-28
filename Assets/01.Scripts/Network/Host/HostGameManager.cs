@@ -23,8 +23,11 @@ public class HostGameManager : IDisposable
     public event Action<string, ulong> OnPlayerConnect;
     public event Action<string, ulong> OnPlayerDisconnect;
 
-    public HostGameManager()
+    private NetworkObject _playPrefab;
+
+    public HostGameManager(NetworkObject playPrefab)
     {
+        _playPrefab = playPrefab;
     }
 
     public async Task<bool> StartHostAsync(string lobbyname, UserData userData) 
@@ -49,7 +52,7 @@ public class HostGameManager : IDisposable
             _lobbyID = lobby.Id;
             HostSingleton.Instnace.StartCoroutine(HeartBeatLobby(15));
 
-            NetServer = new NetworkServer(NetworkManager.Singleton);
+            NetServer = new NetworkServer(NetworkManager.Singleton, _playPrefab);
             NetServer.OnClientJoin += HandleClientJoin;
             NetServer.OnClientLeft += HandleClinetLeft;
 

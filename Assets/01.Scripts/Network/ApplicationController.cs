@@ -14,6 +14,7 @@ public class ApplicationController : MonoBehaviour
 {
     [SerializeField] private ClientSingleton _clientPrefab;
     [SerializeField] private HostSingleton _hostPrefab;
+    [SerializeField] private NetworkObject _playerPrefab;
 
     public static event Action<string> OnMessageEvent;
     public static ApplicationController Instance;
@@ -42,7 +43,7 @@ public class ApplicationController : MonoBehaviour
         }
 
         HostSingleton host = Instantiate(_hostPrefab, transform);
-        host.CreateHost();
+        host.CreateHost(_playerPrefab);
 
         ClientSingleton client = Instantiate(_clientPrefab, transform);
         client.CreateClient();

@@ -48,9 +48,7 @@ public class RoomManagement : MonoBehaviour
         try
         {
             Lobby joiningLobby = await Lobbies.Instance.JoinLobbyByIdAsync(room.Id);
-            Debug.Log(joiningLobby);
             string JoinCode = joiningLobby.Data["JoinCode"].Value;
-            Debug.Log(JoinCode);
             await ApplicationController.Instance.StartClientAsync(PlayerPrefs.GetString(RoomManagement.nameKey), JoinCode);
         }
         catch (LobbyServiceException ex)
@@ -86,9 +84,7 @@ public class RoomManagement : MonoBehaviour
 
         if (result)
         {
-            //NetworkManager.Singleton.SceneManager.LoadScene(SceneList.GameScene, LoadSceneMode.Single);
-            _myRoom.Refresh();
-            panelEndFunc?.Invoke();
+            NetworkManager.Singleton.SceneManager.LoadScene(SceneList.GameScene, LoadSceneMode.Single);
         }
         else
         {

@@ -14,10 +14,12 @@ public class NetworkServer : IDisposable
     private Dictionary<ulong, string> _clientToAuthDictionary = new ();
     private Dictionary<string, UserData> _authIdToUserDataDictionary = new ();
 
+    private NetworkObject _playerPrefab;
     private List<NetworkObject> _playerList = new List<NetworkObject>();
 
-    public NetworkServer(NetworkManager nm)
+    public NetworkServer(NetworkManager nm, NetworkObject playerPrefab)
     {
+        _playerPrefab = playerPrefab;
         _networkManager = nm;
         _networkManager.ConnectionApprovalCallback += ApprovalCheck;
         _networkManager.OnServerStarted += OnServerReady;
@@ -88,6 +90,14 @@ public class NetworkServer : IDisposable
         {
             _networkManager.Shutdown();
         }
+    }
+
+    public void SpawnPlayer(ulong clientID, Vector3 position, ushort colorIdx)
+    {
+        var player = GameObject.Instantiate(_playerPrefab, position, Quaternion.identity);
+        player.SpawnAsPlayerObject(clientID);
+        _playerList.Add(player);
+
     }
 
     public void DestroyAllPlayer()

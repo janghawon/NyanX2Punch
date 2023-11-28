@@ -62,7 +62,8 @@ public class Room
                     text.text = "로비 삭제";
                     text.color = Color.white;
 
-                    btn.onClick.AddListener(() => DestroyRoomEvent?.Invoke(lobby));
+                    btn.onClick.AddListener(() => JoinRoomEvent?.Invoke(lobby));
+                    //btn.onClick.AddListener(() => DestroyRoomEvent?.Invoke(lobby));
                 }
                 else
                 {

@@ -180,14 +180,28 @@ public class GameManager : NetworkBehaviour
     public void GameStart()
     {
         if (!IsHost) return;
-        if(_readyUserCount == 2)
+        if (_readyUserCount >= 1)
         {
+            Debug.Log(3);
             StartGameClientRpc();
-            SceneManager.LoadScene(SceneList.GameScene);
+            SpawnPlayers();
         }
         else
         {
             Debug.Log("플레이어들이 모두 준비를 완료하여야 게임을 시작할 수 있습니다.");
+        }
+    }
+
+    private void SpawnPlayers()
+    {
+        foreach (var player in players)
+        {
+            HostSingleton.Instnace.GamaManager.NetServer.SpawnPlayer
+            (
+                player.clientID,
+                _spawnPosition.position,
+                player.colorIdx
+            );
         }
     }
 
@@ -197,5 +211,4 @@ public class GameManager : NetworkBehaviour
         _gameState = GameState.Game;
         GameStatehanged?.Invoke(_gameState);
     }
-
 }
