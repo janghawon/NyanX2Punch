@@ -47,3 +47,6 @@ TagManager:
   - name: Player
     uniqueID: 2144071
     locked: 0
+  - name: FrontBG
+    uniqueID: 2691111717
+    locked: 0

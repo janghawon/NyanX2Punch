@@ -182,7 +182,6 @@ public class GameManager : NetworkBehaviour
         if (!IsHost) return;
         if (_readyUserCount >= 1)
         {
-            Debug.Log(3);
             StartGameClientRpc();
             SpawnPlayers();
         }

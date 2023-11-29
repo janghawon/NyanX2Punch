@@ -9,8 +9,6 @@ public class PlayerAttack : NetworkBehaviour
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private PlayerAnimation _playerAnimation;
 
-    private int _atkCount;
-
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;
@@ -25,14 +23,11 @@ public class PlayerAttack : NetworkBehaviour
 
     private void HandleAttack()
     {
-        if (_atkCount >= 2) _atkCount = 0;
-
-        _playerAnimation.SetAttack(true, _atkCount);
-        _atkCount++;
+        _playerAnimation.SetAttack(true);
     }
 
-    public void AttackEndEvent()
+    public void AttackStartEvent()
     {
-        _playerAnimation.SetAttack(false, _atkCount);
+        _playerAnimation.SetAttack(false);
     }
 }

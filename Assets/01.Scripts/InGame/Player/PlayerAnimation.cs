@@ -9,33 +9,43 @@ public class PlayerAnimation : MonoBehaviour
 
     private readonly int _isMoveHash = Animator.StringToHash("Speed");
     private readonly int _isAtkHash = Animator.StringToHash("isAtk");
-    private readonly int _atkCountHash = Animator.StringToHash("AtkCount");
+    private readonly int _isJumpHash = Animator.StringToHash("isJump");
+    private readonly int _jumpVlaueHash = Animator.StringToHash("jumpValue");
+    private readonly int _dodgeHash = Animator.StringToHash("isDodge");
 
-    private bool _isInDodge;
+    private float _moveValue;
+    private Vector3 _prevValue;
 
-    public void SetMove(float value)
+    public void SetMove(Vector3 dir)
     {
-        _animator.SetFloat(_isMoveHash, value);
+        _moveValue = _prevValue.x - dir.x;
+
+        FlipController();
+        _animator.SetFloat(_isMoveHash, Mathf.Abs(_moveValue));
+        _prevValue = dir;
     }
-    public void SetAttack(bool atkState, int atkCount)
-    {
-        if (_isInDodge) return;
 
+    public void SetJump(bool JumpState, float jVlaue)
+    {
+        if (PlayerState.IsOnDodge) return;
+
+        _animator.SetBool(_isJumpHash, JumpState);
+        _animator.SetFloat(_jumpVlaueHash, jVlaue);
+    }
+
+    public void SetDodge(bool dodgeState)
+    {
+        _animator.SetBool(_dodgeHash, dodgeState);
+    }
+
+    public void SetAttack(bool atkState)
+    {
         _animator.SetBool(_isAtkHash, atkState);
-        _animator.SetInteger(_atkCountHash, atkCount);
     }
-    public void FlipController(float xDir)
-    {
-        bool isRightTurn = xDir > 0 && _spriteRenderer.flipX;
-        bool isLeftTurn = xDir < 0 && !_spriteRenderer.flipX;
 
-        if (isRightTurn || isLeftTurn)
-        {
-            Flip();
-        }
-    }
-    public void Flip()
+    private void FlipController()
     {
-        _spriteRenderer.flipX = !_spriteRenderer.flipX;
+        if (_moveValue == 0) return;
+        _spriteRenderer.flipX = _moveValue > 0;
     }
 }

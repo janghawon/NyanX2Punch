@@ -31,16 +31,19 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
 
     public void OnDodge(InputAction.CallbackContext context)
     {
-        DodgeEvent?.Invoke();
+        if (context.performed)
+            DodgeEvent?.Invoke();
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        AttackEvent?.Invoke();
+        if(context.performed)
+            AttackEvent?.Invoke();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        JumpEvent?.Invoke();
+        if (context.performed)
+            JumpEvent?.Invoke();
     }
 }
