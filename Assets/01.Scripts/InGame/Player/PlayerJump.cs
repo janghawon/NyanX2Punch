@@ -8,6 +8,8 @@ public class PlayerJump : NetworkBehaviour
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private PlayerAnimation _playerAnimation;
     [SerializeField] private Rigidbody2D _rigid;
+    [SerializeField] private ParticleSystem _jumpFx;
+    [SerializeField] private Transform _JumpFxSpawnPos;
     [SerializeField] private float _jumpForce;
 
     public override void OnNetworkSpawn()
@@ -24,7 +26,10 @@ public class PlayerJump : NetworkBehaviour
 
     private void HandleJump()
     {
+        if (PlayerState.IsOnJump) return;
+
         PlayerState.IsOnJump = true;
+        Instantiate(_jumpFx, _JumpFxSpawnPos.position, Quaternion.identity);
         _rigid.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
 
