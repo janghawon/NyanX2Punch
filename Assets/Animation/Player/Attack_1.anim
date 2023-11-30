@@ -21,12 +21,10 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -562516788, guid: e78ca0784be552040af593cf4ef5485a, type: 3}
-    - time: 0.083333336
       value: {fileID: 521753498, guid: e78ca0784be552040af593cf4ef5485a, type: 3}
-    - time: 0.16666667
+    - time: 0.083333336
       value: {fileID: -180811595, guid: e78ca0784be552040af593cf4ef5485a, type: 3}
-    - time: 0.25
+    - time: 0.16666667
       value: {fileID: -69723656, guid: e78ca0784be552040af593cf4ef5485a, type: 3}
     attribute: m_Sprite
     path: 
@@ -50,7 +48,6 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -562516788, guid: e78ca0784be552040af593cf4ef5485a, type: 3}
     - {fileID: 521753498, guid: e78ca0784be552040af593cf4ef5485a, type: 3}
     - {fileID: -180811595, guid: e78ca0784be552040af593cf4ef5485a, type: 3}
     - {fileID: -69723656, guid: e78ca0784be552040af593cf4ef5485a, type: 3}
@@ -59,7 +56,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.33333334
+    m_StopTime: 0.25
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -80,7 +77,21 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: AttackStartEvent
+    functionName: AttackLogic
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.16666667
+    functionName: AttackEnd
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.16666667
+    functionName: AttackEndEvent
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

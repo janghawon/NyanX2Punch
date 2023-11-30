@@ -12,8 +12,6 @@ public class PlayerDodge : NetworkBehaviour
     [SerializeField] private PlayerMovement _movement;
     [SerializeField] private TrailRenderer _trail;
 
-    private float _saveSpeed;
-
     public override void OnNetworkSpawn()
     {
         if (!IsOwner) return;

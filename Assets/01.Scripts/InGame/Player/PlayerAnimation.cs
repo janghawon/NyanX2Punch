@@ -13,6 +13,7 @@ public class PlayerAnimation : MonoBehaviour
     private readonly int _jumpVlaueHash = Animator.StringToHash("jumpValue");
     private readonly int _dodgeHash = Animator.StringToHash("isDodge");
 
+    public bool isRight;
     private float _moveValue;
     private Vector3 _prevValue;
 
@@ -45,7 +46,8 @@ public class PlayerAnimation : MonoBehaviour
 
     private void FlipController()
     {
-        if (_moveValue == 0) return;
-        _spriteRenderer.flipX = _moveValue > 0;
+        if (_moveValue == 0 || PlayerState.IsOnAttack) return;
+        isRight = _moveValue > 0;
+        _spriteRenderer.flipX = isRight;
     }
 }

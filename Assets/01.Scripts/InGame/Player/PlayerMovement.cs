@@ -7,6 +7,7 @@ public class PlayerMovement : NetworkBehaviour
 {
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] private PlayerAttack _pAttack;
     public float movementSpeed;
     [SerializeField] private PlayerAnimation _playerAnimation;
 
