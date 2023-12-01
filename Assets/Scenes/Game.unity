@@ -727,9 +727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f3f93c97dda49498d0ce7ebc1fa624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 0
-  currentHealth:
-    m_InternalValue: 10
   hitTrm: {fileID: 475152294}
 --- !u!50 &475152291
 Rigidbody2D:
@@ -3825,6 +3822,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _myRect: {fileID: 703416600}
   _enemtyRect: {fileID: 1531557056}
+  _lerpSpeed: 8
 --- !u!1 &2080665132
 GameObject:
   m_ObjectHideFlags: 0

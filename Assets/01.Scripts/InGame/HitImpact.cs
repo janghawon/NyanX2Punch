@@ -6,6 +6,6 @@ public class HitImpact : MonoBehaviour
 {
     private void OnParticleSystemStopped()
     {
-        Destroy(transform.gameObject);
+        Destroy(transform.parent.gameObject);
     }
 }

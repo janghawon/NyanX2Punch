@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class InputReader : ScriptableObject, Controls.IPlayerActions 
 {
     public event Action<Vector2> MovementEvent;
-    public event Action DodgeEvent;
     public event Action AttackEvent;
     public event Action JumpEvent;
 
@@ -27,12 +26,6 @@ public class InputReader : ScriptableObject, Controls.IPlayerActions
     {
         Vector2 value = context.ReadValue<Vector2>();
         MovementEvent?.Invoke(value);
-    }
-
-    public void OnDodge(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-            DodgeEvent?.Invoke();
     }
 
     public void OnAttack(InputAction.CallbackContext context)

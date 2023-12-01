@@ -206,12 +206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5f3f93c97dda49498d0ce7ebc1fa624, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 15
-  currentHealth:
-    m_InternalValue: 15
-  OnHealthChanged:
-    m_PersistentCalls:
-      m_Calls: []
   hitTrm: {fileID: 9059804986839229245}
 --- !u!1 &2814241341476851809
 GameObject:
@@ -433,8 +427,6 @@ GameObject:
   - component: {fileID: 4230330894114360714}
   - component: {fileID: 3014675563429104949}
   - component: {fileID: 1822754420982178617}
-  - component: {fileID: 8109194999010240180}
-  - component: {fileID: 7596582465880720933}
   - component: {fileID: 4151368865980783694}
   m_Layer: 0
   m_Name: Visual
@@ -559,46 +551,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _myCol: {fileID: 741799590314024798}
-  _atkValue: 5
+  _atkValue: 100
   _detectRange: 2.5
   _hitImpact: {fileID: 2938137226376156754, guid: c4397c7abedd606489474a684d398400, type: 3}
   _inputReader: {fileID: 11400000, guid: 2cf76c56ff330e74bb1dcfede0aac2fc, type: 2}
   _playerAnimation: {fileID: 3014675563429104949}
---- !u!114 &8109194999010240180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8977438136177399698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 632ffe007552be7468d8e1321b8ead70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: 2cf76c56ff330e74bb1dcfede0aac2fc, type: 2}
-  _playerAnimation: {fileID: 3014675563429104949}
-  _rigid: {fileID: 4123758342123215664}
-  _jumpFx: {fileID: 5183646923595374112, guid: e0b28914aca758a4ea67f9351fedb1a3, type: 3}
-  _JumpFxSpawnPos: {fileID: 7700147202798713094}
-  _jumpForce: 12
---- !u!114 &7596582465880720933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8977438136177399698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd01f004f4fa6b04d9076efed8df18e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputReader: {fileID: 11400000, guid: 2cf76c56ff330e74bb1dcfede0aac2fc, type: 2}
-  _playerAnimation: {fileID: 3014675563429104949}
-  _rigid: {fileID: 4123758342123215664}
-  _movement: {fileID: 5113469765071466441}
-  _trail: {fileID: 6779428122430949553}
 --- !u!114 &4151368865980783694
 MonoBehaviour:
   m_ObjectHideFlags: 0

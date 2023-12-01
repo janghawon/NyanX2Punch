@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -8,12 +9,13 @@ public class GameBar : NetworkBehaviour
     [SerializeField] private RectTransform _myRect;
     [SerializeField] private RectTransform _enemtyRect;
 
-    private int _enemyValue;
-    private int _myValue;
+    private int _enemyValue = 500;
+    private int _myValue = 500;
+
+    [SerializeField] private float _lerpSpeed;
 
     public void OnChangeGameBarValue(int newValue)
     {
-        Debug.Log(1);
         if(IsOwner)
         {
             _myValue += newValue;
@@ -24,17 +26,29 @@ public class GameBar : NetworkBehaviour
             _enemyValue += newValue;
             _myValue -= newValue;
         }
-        ValueBarVisualChange();
     }
 
-    private void ValueBarVisualChange()
+    private void EnemyBarVisualChange()
     {
-        int fullSize = _enemyValue + _myValue;
+        if (_enemtyRect.sizeDelta.x == _enemyValue) return;
 
-        int enemyRectValue = _enemyValue / fullSize * 1000;
-        int myRectValue = _myValue / fullSize * 1000;
+        _enemtyRect.sizeDelta = Vector2.Lerp(_enemtyRect.sizeDelta, 
+                                             new Vector2(_enemyValue, _enemtyRect.sizeDelta.y), 
+                                             Time.deltaTime * _lerpSpeed);
+    }
 
-        _enemtyRect.sizeDelta = new Vector2(enemyRectValue, _enemtyRect.sizeDelta.y);
-        _myRect.sizeDelta = new Vector2(myRectValue, _myRect.sizeDelta.y);
+    private void PlayerBarVisualChange()
+    {
+        if (_myRect.sizeDelta.x == _myValue) return;
+
+        _myRect.sizeDelta = Vector2.Lerp(_myRect.sizeDelta,
+                                             new Vector2(_myValue, _myRect.sizeDelta.y),
+                                             Time.deltaTime * _lerpSpeed);
+    }
+
+    private void Update()
+    {
+        EnemyBarVisualChange();
+        PlayerBarVisualChange();
     }
 }

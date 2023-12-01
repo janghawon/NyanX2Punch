@@ -6,12 +6,18 @@ using UnityEngine;
 
 public class PlayerAttack : NetworkBehaviour
 {
+    private GameBar _gameBar;
     [SerializeField] private Collider2D _myCol;
     [SerializeField] private int _atkValue = 5;
     [SerializeField] private float _detectRange = 5.0f;
     [SerializeField] private GameObject _hitImpact;
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private PlayerAnimation _playerAnimation;
+
+    private void Awake()
+    {
+        _gameBar = GameObject.Find("Canvas/EmptyBar").GetComponent<GameBar>();
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -48,7 +54,7 @@ public class PlayerAttack : NetworkBehaviour
                 Vector3 dir = (collider.transform.position - transform.position).normalized;
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 Instantiate(_hitImpact, ph.hitTrm.position, Quaternion.Euler(0, 0, angle));
-                ph.TakeDamage(_atkValue, OwnerClientId);
+                _gameBar.OnChangeGameBarValue(_atkValue);
                 FeedbackManager.Instance.ShaekScreen();
                 FeedbackManager.Instance.StopTime(0.02f);
             }
