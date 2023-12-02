@@ -30,7 +30,7 @@ public class PlayerJump : NetworkBehaviour
         if (_playerState.IsOnJump || _playerState.IsOnDie) return;
 
         _playerState.IsOnJump = true;
-        Instantiate(_jumpFx, _JumpFxSpawnPos.position, Quaternion.identity);
+        FeedbackManager.Instance.MakeFxRpc(FXType.jump, _JumpFxSpawnPos.position);
         _rigid.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
 

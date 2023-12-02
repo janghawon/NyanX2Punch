@@ -91,7 +91,7 @@ MonoBehaviour:
   UseQuaternionCompression: 0
   UseHalfFloatPrecision: 0
   InLocalSpace: 0
-  Interpolate: 1
+  Interpolate: 0
   SlerpPosition: 0
 --- !u!50 &4123758342123215664
 Rigidbody2D:
@@ -447,6 +447,7 @@ GameObject:
   - component: {fileID: 3014675563429104949}
   - component: {fileID: 1822754420982178617}
   - component: {fileID: 4151368865980783694}
+  - component: {fileID: 1526389766658691563}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -574,7 +575,7 @@ MonoBehaviour:
   _atkValue: 100
   _detectRange: 2.5
   _hitImpact: {fileID: 2938137226376156754, guid: c4397c7abedd606489474a684d398400, type: 3}
-  _sparkImpact: {fileID: 0}
+  _sparkImpact: {fileID: 3006898039691957817, guid: 4c8aab8696da5624c950fd0fab001422, type: 3}
   _inputReader: {fileID: 11400000, guid: 2cf76c56ff330e74bb1dcfede0aac2fc, type: 2}
   _playerAnimation: {fileID: 3014675563429104949}
   _playerState: {fileID: 4151368865980783694}
@@ -594,3 +595,22 @@ MonoBehaviour:
   IsOnDodge: 0
   IsOnAttack: 0
   IsOnDie: 0
+--- !u!114 &1526389766658691563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8977438136177399698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 632ffe007552be7468d8e1321b8ead70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputReader: {fileID: 11400000, guid: 2cf76c56ff330e74bb1dcfede0aac2fc, type: 2}
+  _playerAnimation: {fileID: 3014675563429104949}
+  _rigid: {fileID: 4123758342123215664}
+  _jumpFx: {fileID: 5183646923595374112, guid: e0b28914aca758a4ea67f9351fedb1a3, type: 3}
+  _JumpFxSpawnPos: {fileID: 7700147202798713094}
+  _jumpForce: 12
+  _playerState: {fileID: 4151368865980783694}

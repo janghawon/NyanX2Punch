@@ -1337,8 +1337,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 689569670}
-  - component: {fileID: 689569669}
   - component: {fileID: 689569668}
+  - component: {fileID: 689569669}
   m_Layer: 0
   m_Name: GamaManager
   m_TagString: Untagged
@@ -1933,6 +1933,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1065513396}
+  - component: {fileID: 1065513399}
   - component: {fileID: 1065513398}
   - component: {fileID: 1065513397}
   m_Layer: 0
@@ -2022,7 +2023,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93599f246a77b814595373381d8ecddf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _effectList:
+  - {fileID: 5884209892100440326, guid: e0b28914aca758a4ea67f9351fedb1a3, type: 3}
+  - {fileID: 2938137226376156754, guid: c4397c7abedd606489474a684d398400, type: 3}
+  - {fileID: 3006898039691957817, guid: 4c8aab8696da5624c950fd0fab001422, type: 3}
   _source: {fileID: 1065513397}
+--- !u!114 &1065513399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065513395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2605133313
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1 &1183613921
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,8 +56,8 @@ public class PlayerAttack : NetworkBehaviour
                 Vector3 dir = (collider.transform.position - transform.position).normalized;
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-                Instantiate(_hitImpact, ph.hitTrm.position, Quaternion.Euler(0, 0, angle));
-                Instantiate(_sparkImpact, ph.hitTrm.position, Quaternion.identity);
+                FeedbackManager.Instance.MakeFxRpc(FXType.impact, ph.hitTrm.position, Quaternion.Euler(0, 0, angle));
+                FeedbackManager.Instance.MakeFxRpc(FXType.spark, ph.hitTrm.position);
 
                 ph.Dir = dir;
 

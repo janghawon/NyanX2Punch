@@ -1600,8 +1600,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lobby
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b7f763939d0886148bb23e74d1d503ad, type: 2}
-  m_sharedMaterial: {fileID: -3003044880582778898, guid: b7f763939d0886148bb23e74d1d503ad, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d452fb6e34e159f4db6065c6e6fe3fbc, type: 2}
+  m_sharedMaterial: {fileID: 6999782637927655723, guid: d452fb6e34e159f4db6065c6e6fe3fbc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1734,8 +1734,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC720\uC800 \uB300\uAE30 \uC911 . . ."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b7f763939d0886148bb23e74d1d503ad, type: 2}
-  m_sharedMaterial: {fileID: -3003044880582778898, guid: b7f763939d0886148bb23e74d1d503ad, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

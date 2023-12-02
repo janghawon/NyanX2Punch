@@ -49,20 +49,8 @@ public class Room
             var lobyTemplate = GameObject.Instantiate(_roomElement, _content);
 
             lobyTemplate.Find("RoomName").GetComponent<TextMeshProUGUI>().text = lobby.Name;
-
-            for(int i = 0; i < lobby.Players.Count; i++)
-            {
-                Button btn = lobyTemplate.Find("EnterBtn").GetComponent<Button>();
-                if(lobby.HostId == lobby.Players[i].Id)
-                {
-                    TextMeshProUGUI text = btn.transform.Find("ParticipateTxt").GetComponent<TextMeshProUGUI>();
-                    text.text = "ТќАЁ Сп"; 
-                }
-                else
-                {
-                    btn.onClick.AddListener(() => JoinRoomEvent?.Invoke(lobby));
-                }
-            }
+            Button btn = lobyTemplate.Find("EnterBtn").GetComponent<Button>();
+            btn.onClick.AddListener(() => JoinRoomEvent?.Invoke(lobby));
         }
         _isLobbyRefresh = false;
     }
