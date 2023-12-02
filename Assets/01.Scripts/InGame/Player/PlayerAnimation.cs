@@ -6,6 +6,7 @@ public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private PlayerState _playerState;
 
     private readonly int _isMoveHash = Animator.StringToHash("Speed");
     private readonly int _isAtkHash = Animator.StringToHash("isAtk");
@@ -28,7 +29,7 @@ public class PlayerAnimation : MonoBehaviour
 
     public void SetJump(bool JumpState, float jVlaue)
     {
-        if (PlayerState.IsOnDodge) return;
+        if (_playerState.IsOnDodge) return;
 
         _animator.SetBool(_isJumpHash, JumpState);
         _animator.SetFloat(_jumpVlaueHash, jVlaue);
@@ -46,7 +47,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void FlipController()
     {
-        if (_moveValue == 0 || PlayerState.IsOnAttack) return;
+        if (_moveValue == 0 || _playerState.IsOnAttack) return;
         isRight = _moveValue > 0;
         _spriteRenderer.flipX = isRight;
     }

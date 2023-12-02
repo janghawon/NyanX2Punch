@@ -769,8 +769,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uBC29 \uB9CC\uB4E4\uAE30"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e900d786402101149a135b4155bc80c1, type: 2}
-  m_sharedMaterial: {fileID: -3003044880582778898, guid: e900d786402101149a135b4155bc80c1, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ec4ff415de5450149a70344fda336bae, type: 2}
+  m_sharedMaterial: {fileID: 6999782637927655723, guid: ec4ff415de5450149a70344fda336bae, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1868,8 +1868,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: username
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b7f763939d0886148bb23e74d1d503ad, type: 2}
-  m_sharedMaterial: {fileID: -3003044880582778898, guid: b7f763939d0886148bb23e74d1d503ad, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d452fb6e34e159f4db6065c6e6fe3fbc, type: 2}
+  m_sharedMaterial: {fileID: 6999782637927655723, guid: d452fb6e34e159f4db6065c6e6fe3fbc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

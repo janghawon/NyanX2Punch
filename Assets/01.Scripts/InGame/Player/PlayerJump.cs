@@ -11,6 +11,7 @@ public class PlayerJump : NetworkBehaviour
     [SerializeField] private ParticleSystem _jumpFx;
     [SerializeField] private Transform _JumpFxSpawnPos;
     [SerializeField] private float _jumpForce;
+    [SerializeField] private PlayerState _playerState;
 
     public override void OnNetworkSpawn()
     {
@@ -26,9 +27,9 @@ public class PlayerJump : NetworkBehaviour
 
     private void HandleJump()
     {
-        if (PlayerState.IsOnJump) return;
+        if (_playerState.IsOnJump || _playerState.IsOnDie) return;
 
-        PlayerState.IsOnJump = true;
+        _playerState.IsOnJump = true;
         Instantiate(_jumpFx, _JumpFxSpawnPos.position, Quaternion.identity);
         _rigid.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }

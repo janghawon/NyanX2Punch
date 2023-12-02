@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5113469765071466441}
   - component: {fileID: 7117467866609438310}
   - component: {fileID: 6951251148592703389}
+  - component: {fileID: 65452654596689837}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -181,6 +182,7 @@ MonoBehaviour:
   _pAttack: {fileID: 0}
   movementSpeed: 0.15
   _playerAnimation: {fileID: 3014675563429104949}
+  _playerState: {fileID: 4151368865980783694}
   movementInput: {x: 0, y: 0}
 --- !u!114 &7117467866609438310
 MonoBehaviour:
@@ -207,6 +209,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitTrm: {fileID: 9059804986839229245}
+  Dir: {x: 0, y: 0, z: 0}
+--- !u!114 &65452654596689837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2772056109813227955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4e7d3ae3a958db44bddeb5083e6e510, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerState: {fileID: 4151368865980783694}
+  _playerHealth: {fileID: 6951251148592703389}
+  _rigid: {fileID: 4123758342123215664}
+  _smokeParticle: {fileID: 2501392959615273030, guid: fd27e2e21a5606f428697d231c13ca18, type: 3}
 --- !u!1 &2814241341476851809
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,6 +556,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 4230330894114360714}
   _spriteRenderer: {fileID: 1038850942689829301}
+  _playerState: {fileID: 4151368865980783694}
   isRight: 0
 --- !u!114 &1822754420982178617
 MonoBehaviour:
@@ -554,8 +574,10 @@ MonoBehaviour:
   _atkValue: 100
   _detectRange: 2.5
   _hitImpact: {fileID: 2938137226376156754, guid: c4397c7abedd606489474a684d398400, type: 3}
+  _sparkImpact: {fileID: 0}
   _inputReader: {fileID: 11400000, guid: 2cf76c56ff330e74bb1dcfede0aac2fc, type: 2}
   _playerAnimation: {fileID: 3014675563429104949}
+  _playerState: {fileID: 4151368865980783694}
 --- !u!114 &4151368865980783694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,3 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e836c2716b841f479da1bb159a72220, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsOnJump: 0
+  IsOnDodge: 0
+  IsOnAttack: 0
+  IsOnDie: 0

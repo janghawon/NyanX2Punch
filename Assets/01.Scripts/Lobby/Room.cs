@@ -55,15 +55,8 @@ public class Room
                 Button btn = lobyTemplate.Find("EnterBtn").GetComponent<Button>();
                 if(lobby.HostId == lobby.Players[i].Id)
                 {
-                    Image btnImg = btn.GetComponent<Image>();
-                    btnImg.color = Color.red;
-
                     TextMeshProUGUI text = btn.transform.Find("ParticipateTxt").GetComponent<TextMeshProUGUI>();
-                    text.text = "로비 삭제";
-                    text.color = Color.white;
-
-                    btn.onClick.AddListener(() => JoinRoomEvent?.Invoke(lobby));
-                    //btn.onClick.AddListener(() => DestroyRoomEvent?.Invoke(lobby));
+                    text.text = "참가 중"; 
                 }
                 else
                 {

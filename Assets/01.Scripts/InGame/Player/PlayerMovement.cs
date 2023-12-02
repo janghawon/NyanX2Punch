@@ -10,6 +10,7 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private PlayerAttack _pAttack;
     public float movementSpeed;
     [SerializeField] private PlayerAnimation _playerAnimation;
+    [SerializeField] private PlayerState _playerState;
 
     public Vector2 movementInput;
 
@@ -35,6 +36,8 @@ public class PlayerMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
+        if (_playerState.IsOnDie) return;
+
         _playerAnimation.SetMove(transform.position);
         if (!IsOwner) return;
         transform.position += (Vector3)movementInput * movementSpeed;

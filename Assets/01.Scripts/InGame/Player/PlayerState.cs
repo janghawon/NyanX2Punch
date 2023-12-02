@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour
 {
-    public static bool IsOnJump;
-    public static bool IsOnDodge;
-    public static bool IsOnAttack;
+    public bool IsOnJump;
+    public bool IsOnDodge;
+    public bool IsOnAttack;
+    public bool IsOnDie;
 
     public void JumpEnd()
     {

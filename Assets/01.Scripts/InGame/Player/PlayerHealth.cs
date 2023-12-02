@@ -7,4 +7,5 @@ using System;
 public class PlayerHealth : NetworkBehaviour
 {
     public Transform hitTrm;
+    public Vector3 Dir;
 }

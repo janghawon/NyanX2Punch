@@ -11,8 +11,10 @@ public class PlayerAttack : NetworkBehaviour
     [SerializeField] private int _atkValue = 5;
     [SerializeField] private float _detectRange = 5.0f;
     [SerializeField] private GameObject _hitImpact;
+    [SerializeField] private GameObject _sparkImpact;
     [SerializeField] private InputReader _inputReader;
     [SerializeField] private PlayerAnimation _playerAnimation;
+    [SerializeField] private PlayerState _playerState;
 
     private void Awake()
     {
@@ -33,7 +35,7 @@ public class PlayerAttack : NetworkBehaviour
 
     private void HandleAttack()
     {
-        if (PlayerState.IsOnJump) return;
+        if (_playerState.IsOnJump || _playerState.IsOnAttack) return;
 
         _playerAnimation.SetAttack(true);
     }
@@ -53,10 +55,16 @@ public class PlayerAttack : NetworkBehaviour
             {
                 Vector3 dir = (collider.transform.position - transform.position).normalized;
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
                 Instantiate(_hitImpact, ph.hitTrm.position, Quaternion.Euler(0, 0, angle));
-                _gameBar.OnChangeGameBarValue(_atkValue);
+                Instantiate(_sparkImpact, ph.hitTrm.position, Quaternion.identity);
+
+                ph.Dir = dir;
+
                 FeedbackManager.Instance.ShaekScreen();
                 FeedbackManager.Instance.StopTime(0.02f);
+
+                _gameBar.OnChangeGameBarValue(_atkValue);
             }
         }
     }

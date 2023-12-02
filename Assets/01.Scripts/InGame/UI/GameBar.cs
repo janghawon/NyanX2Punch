@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class GameBar : NetworkBehaviour
 {
+    public PlayerDie myDie;
+    public PlayerDie enemyDie;
+
     [SerializeField] private RectTransform _myRect;
     [SerializeField] private RectTransform _enemtyRect;
 
@@ -20,11 +23,21 @@ public class GameBar : NetworkBehaviour
         {
             _myValue += newValue;
             _enemyValue -= newValue;
+
+            if(_enemyValue == 0)
+            {
+                enemyDie.Die();
+            }
         }
         else
         {
             _enemyValue += newValue;
             _myValue -= newValue;
+
+            if (_myValue == 0)
+            {
+                myDie.Die();
+            }
         }
     }
 
