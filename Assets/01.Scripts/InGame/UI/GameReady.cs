@@ -69,7 +69,8 @@ public class GameReady : NetworkBehaviour
     private void UploadHostPanelClientRpc(string name)
     {
         _hostName.text = name.ToString();
-        Instantiate(_readyBtn, _hostPanel).transform.localPosition = _hostReadyBtnTrm.localPosition;
+        var btn = Instantiate(_readyBtn, _hostPanel);
+        btn.transform.localPosition = _hostReadyBtnTrm.localPosition;
     }
 
     [ClientRpc]
