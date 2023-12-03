@@ -69,38 +69,16 @@ public class GameManager : NetworkBehaviour
         {
             HostSingleton.Instnace.GamaManager.OnPlayerConnect += OnPlayerConnectHandle;
             HostSingleton.Instnace.GamaManager.OnPlayerDisconnect += OnPlayerDisconnectHandle;
+            myGameRole = GameRole.Host;
 
             var gameData = HostSingleton.Instnace.GamaManager.NetServer.GetUserDataByClientID(OwnerClientId);
             OnPlayerConnectHandle(gameData.userAuthID, OwnerClientId);
-            myGameRole = GameRole.Host;
         }
         else
         {
             myGameRole = GameRole.Client;
         }
-    }
-
-    [ClientRpc]
-    public void SendResultToClientRpc(GameRole winner)
-    {
-        if(winner == myGameRole)
-        {
-            _gameState = GameState.Win;
-            SignalHub.OnEndGame?.Invoke(true);
-        }
-        else
-        {
-            _gameState = GameState.Lose;
-            SignalHub.OnEndGame?.Invoke(false);
-        }
-
-        GameStatehanged?.Invoke(_gameState);
-    }
-
-    public void SendResultToClient(GameRole winner)
-    {
-        HostSingleton.Instnace.GamaManager.NetServer.DestroyAllPlayer();
-        SendResultToClientRpc(winner);
+        
     }
 
     public override void OnNetworkDespawn()
@@ -115,6 +93,7 @@ public class GameManager : NetworkBehaviour
     private void OnPlayerConnectHandle(string authID, ulong clientID)
     {
         UserData data = HostSingleton.Instnace.GamaManager.NetServer.GetUserDataByClientID(clientID);
+        
         players.Add(new GameData
         {
             clientID = clientID,
@@ -122,7 +101,6 @@ public class GameManager : NetworkBehaviour
             ready = false,
             colorIdx = _colorIdx
         });
-        ++_colorIdx;
     }
 
     private void OnPlayerDisconnectHandle(string authID, ulong clientID)
