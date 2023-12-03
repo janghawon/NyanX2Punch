@@ -11,7 +11,7 @@ public enum FXType
     spark
 }
 
-public class FeedbackManager : MonoBehaviour
+public class FeedbackManager : NetworkBehaviour
 {
     public static FeedbackManager Instance;
     [SerializeField] private List<GameObject> _effectList = new List<GameObject>();
@@ -22,14 +22,26 @@ public class FeedbackManager : MonoBehaviour
         Instance = this;
     }
 
-    [ServerRpc(RequireOwnership =false)]
-    public void MakeFxRpc(FXType type, Vector2 pos)
+    [ServerRpc(RequireOwnership = false)]
+    public void MakeFxServerRpc(FXType type, Vector2 pos)
+    {
+        MakeFxClientRpc(type, pos);
+    }
+
+    [ClientRpc]
+    private void MakeFxClientRpc(FXType type, Vector2 pos)
     {
         Instantiate(_effectList[(int)type], pos, Quaternion.identity);
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void MakeFxRpc(FXType type, Vector2 pos, Quaternion rot)
+    public void MakeFxServerRpc(FXType type, Vector2 pos, Quaternion rot)
+    {
+        MakeFxClientRpc(type, pos, rot);
+    }
+
+    [ClientRpc]
+    private void MakeFxClientRpc(FXType type, Vector2 pos, Quaternion rot)
     {
         Instantiate(_effectList[(int)type], pos, rot);
     }

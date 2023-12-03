@@ -39,7 +39,7 @@ public class PlayerDie : NetworkBehaviour
     {
         if(collision.gameObject.CompareTag("MapLimit") && _playerState.IsOnDie)
         {
-
+            Debug.Log(1);
         }
     }
 }

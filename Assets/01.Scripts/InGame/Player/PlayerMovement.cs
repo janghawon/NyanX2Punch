@@ -13,6 +13,7 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private PlayerState _playerState;
 
     public Vector2 movementInput;
+    private Vector3 prevpos;
 
     // 동적으로 생성 : Awake -> Spawn -> Start
     // 이미 씬에 배치된 오브젝트 : Awake -> Start -> Spawn
@@ -38,7 +39,8 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (_playerState.IsOnDie) return;
 
-        _playerAnimation.SetMove(transform.position);
+        _playerAnimation.SetMove(prevpos.x - transform.position.x);
+        prevpos = transform.position;
         if (!IsOwner) return;
         transform.position += (Vector3)movementInput * movementSpeed;
     }

@@ -16,6 +16,8 @@ public class PlayerAttack : NetworkBehaviour
     [SerializeField] private PlayerAnimation _playerAnimation;
     [SerializeField] private PlayerState _playerState;
 
+    private bool _isAtk;
+
     private void Awake()
     {
         _gameBar = GameObject.Find("Canvas/EmptyBar").GetComponent<GameBar>();
@@ -37,12 +39,17 @@ public class PlayerAttack : NetworkBehaviour
     {
         if (_playerState.IsOnJump || _playerState.IsOnAttack) return;
 
-        _playerAnimation.SetAttack(true);
+        _isAtk = true;
     }
-
+    
     public void AttackEndEvent()
     {
-        _playerAnimation.SetAttack(false);
+        _isAtk = false;
+    }
+
+    private void FixedUpdate()
+    {
+        _playerAnimation.SetAttack(_isAtk);
     }
 
     public void AttackLogic()
@@ -56,8 +63,8 @@ public class PlayerAttack : NetworkBehaviour
                 Vector3 dir = (collider.transform.position - transform.position).normalized;
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-                FeedbackManager.Instance.MakeFxRpc(FXType.impact, ph.hitTrm.position, Quaternion.Euler(0, 0, angle));
-                FeedbackManager.Instance.MakeFxRpc(FXType.spark, ph.hitTrm.position);
+                FeedbackManager.Instance.MakeFxServerRpc(FXType.impact, ph.hitTrm.position, Quaternion.Euler(0, 0, angle));
+                FeedbackManager.Instance.MakeFxServerRpc(FXType.spark, ph.hitTrm.position);
 
                 ph.Dir = dir;
 

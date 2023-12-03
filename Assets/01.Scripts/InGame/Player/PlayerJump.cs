@@ -30,15 +30,12 @@ public class PlayerJump : NetworkBehaviour
         if (_playerState.IsOnJump || _playerState.IsOnDie) return;
 
         _playerState.IsOnJump = true;
-        FeedbackManager.Instance.MakeFxRpc(FXType.jump, _JumpFxSpawnPos.position);
+        FeedbackManager.Instance.MakeFxServerRpc(FXType.jump, _JumpFxSpawnPos.position);
         _rigid.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (_rigid.velocity.y != 0)
-            _playerAnimation.SetJump(true, _rigid.velocity.y);
-        else
-            _playerAnimation.SetJump(false, _rigid.velocity.y);
+        _playerAnimation.SetJump(_rigid.velocity.y != 0, _rigid.velocity.y);
     }
 }
