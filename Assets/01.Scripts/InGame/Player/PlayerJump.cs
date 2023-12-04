@@ -34,6 +34,16 @@ public class PlayerJump : NetworkBehaviour
         _rigid.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
 
+    private void FixedUpdate()
+    {
+        if (!_playerState.IsOnJump) return;
+
+        if(_rigid.velocity.y == 0)
+        {
+            _playerState.IsOnJump = false;
+        }
+    }
+
     public void JumpEnd()
     {
         _playerState.IsOnJump = false;

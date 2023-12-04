@@ -86,6 +86,7 @@ public class PlayerAnimation : NetworkBehaviour
     [ServerRpc]
     private void SetValueMoveServerRpc(float Xdir)
     {
+        if (_playerState.IsOnJump) return;
         _moveValue.Value = Xdir;
     }
 
