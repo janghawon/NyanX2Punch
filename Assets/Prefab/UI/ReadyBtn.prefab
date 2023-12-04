@@ -134,6 +134,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6bbb2cd22179d04eb4c74bfbedc4b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _acceptColor: {r: 0.57788247, g: 1, b: 0.4660377, a: 1}
+  _cancleColor: {r: 1, g: 0.48627448, b: 0.54133195, a: 1}
+  btnText: {fileID: 0}
+  nameText: {fileID: 0}
 --- !u!1 &1714434378004559859
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,7 +150,7 @@ GameObject:
   - component: {fileID: 7549080830388586880}
   - component: {fileID: 5980617650603326365}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: StateText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

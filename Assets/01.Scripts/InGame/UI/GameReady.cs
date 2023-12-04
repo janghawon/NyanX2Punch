@@ -22,6 +22,9 @@ public class GameReady : NetworkBehaviour
     [SerializeField] private Transform _hostReadyBtnTrm;
     [SerializeField] private Transform _clientReadyBtnTrm;
 
+    [SerializeField] private StartBtn _startBtn;
+    [SerializeField] private ExitBtn _exitBtn;
+
     private void Awake()
     {
         _clientPanel.localPosition = _clientReadyPos;
@@ -37,19 +40,13 @@ public class GameReady : NetworkBehaviour
 
     private void Start()
     {
-        foreach(GameData gd in GameManager.Instance.players)
+        if(IsHost)
         {
-            if(gd.clientID == OwnerClientId)
-            {
-                if(IsHost)
-                {
-                    UploadHostPanelServerRpc(gd.playerName.ToString());
-                }
-                else
-                {
-                    UploadClientPanelServerRpc(gd.playerName.ToString());
-                }
-            }
+            UploadHostPanelServerRpc(GameManager.Instance.players[0].playerName.ToString());
+        }
+        else
+        {
+            UploadClientPanelServerRpc(GameManager.Instance.players[1].playerName.ToString());
         }
     }
 
@@ -71,27 +68,24 @@ public class GameReady : NetworkBehaviour
         _hostName.text = name.ToString();
         var btn = Instantiate(_readyBtn, _hostPanel);
         btn.transform.localPosition = _hostReadyBtnTrm.localPosition;
+        btn.btnText = btn.transform.Find("StateText").GetComponent<TextMeshProUGUI>();
+
+        Instantiate(_startBtn, _hostPanel);
     }
 
     [ClientRpc]
     private void UploadClientPanelClientRpc(string name)
     {
-        foreach(GameData gd in GameManager.Instance.players)
-        {
-            if(gd.clientID == OwnerClientId)
-            {
-                _clientName.text = name.ToString();
-                _clientPanel.DOLocalMoveY(_clientAllocationPos.y, 0.5f);
-            }
-            else
-            {
-                _hostName.text = gd.playerName.ToString();
-            }
-        }
+        _clientName.text = name.ToString();
+        _clientPanel.DOLocalMoveY(_clientAllocationPos.y, 0.5f);
 
         if (IsHost) return;
+
+        _hostName.text = GameManager.Instance.players[0].playerName.ToString();
+
         var btn = Instantiate(_readyBtn, _clientPanel);
         btn.transform.localPosition = _clientReadyBtnTrm.localPosition;
+        btn.btnText = btn.transform.Find("StateText").GetComponent<TextMeshProUGUI>();
         btn.transform.rotation = Quaternion.identity;
     }
 }

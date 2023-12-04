@@ -1,21 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class ProfileReady : MonoBehaviour
+public class ProfileReady : NetworkBehaviour
 {
-    [SerializeField] private GameObject _hostSunglass;
-    [SerializeField] private GameObject _clientSunglass;
+    private readonly int _readyHash = Animator.StringToHash("isReady");
 
-    private void Awake()
+    [SerializeField] private Animator _hostAnimator;
+    [SerializeField] private Animator _clientAnimator;
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetReadyServerRpc(GameRole role, bool state)
     {
-        _hostSunglass.SetActive(false);
-        _clientSunglass.SetActive(false);
+        SetReadyClientRpc(role, state);
     }
 
-    public void SetStateReady(GameRole role, bool state)
+    [ClientRpc]
+    private void SetReadyClientRpc(GameRole role, bool state)
     {
-        GameObject sunglass = role == GameRole.Host ? _hostSunglass : _clientSunglass;
-        sunglass.SetActive(state);
+        if (role == GameRole.Host)
+        {
+            _hostAnimator.SetBool(_readyHash, state);
+        }
+        else
+        {
+            _clientAnimator.SetBool(_readyHash, state);
+        }
     }
 }

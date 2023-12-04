@@ -6,10 +6,12 @@ using TMPro;
 
 public class ReadyBtn : MonoBehaviour
 {
+    private ProfileReady _profileReady;
     [SerializeField] private Color _acceptColor;
     [SerializeField] private Color _cancleColor;
 
-    public TextMeshProUGUI _text;
+    public TextMeshProUGUI btnText;
+    public TextMeshProUGUI nameText;
     private Button _thisBtn;
     private Image _img;
 
@@ -17,6 +19,7 @@ public class ReadyBtn : MonoBehaviour
     {
         _thisBtn = GetComponent<Button>();
         _img = _thisBtn.GetComponent<Image>();
+        _profileReady = GameObject.Find("Canvas/ReadyUI").GetComponent<ProfileReady>();
     }
     private void Start()
     {
@@ -27,7 +30,8 @@ public class ReadyBtn : MonoBehaviour
     {
         GameManager.Instance.GameReady();
         _img.color = _cancleColor;
-        _text.text = "준비 해제";
+        btnText.text = "준비 해제?";
+        _profileReady.SetReadyServerRpc(GameManager.Instance.myGameRole, true);
 
         _thisBtn.onClick.RemoveAllListeners();
         _thisBtn.onClick.AddListener(HandleGameReadyCancle);
@@ -36,8 +40,9 @@ public class ReadyBtn : MonoBehaviour
     private void HandleGameReadyCancle()
     {
         GameManager.Instance.GameReady();
-        _img.color = _cancleColor;
-        _text.text = "준비 해제";
+        _img.color = _acceptColor;
+        btnText.text = "준비 완료!";
+        _profileReady.SetReadyServerRpc(GameManager.Instance.myGameRole, false);
 
         _thisBtn.onClick.RemoveAllListeners();
         _thisBtn.onClick.AddListener(HandleGameReady);
