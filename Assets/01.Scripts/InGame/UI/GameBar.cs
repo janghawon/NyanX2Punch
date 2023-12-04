@@ -12,29 +12,30 @@ public class GameBar : NetworkBehaviour
     [SerializeField] private RectTransform _myRect;
     [SerializeField] private RectTransform _enemtyRect;
 
-    private NetworkVariable<int> _enemyValue = new NetworkVariable<int>(500);
-    private NetworkVariable<int> _myValue = new NetworkVariable<int>(500);
+    private NetworkVariable<int> _clientValue = new NetworkVariable<int>(500);
+    private NetworkVariable<int> _hostValue = new NetworkVariable<int>(500);
 
     [SerializeField] private float _lerpSpeed;
 
-    public void OnChangeGameBarValue(int newValue)
+    [ServerRpc(RequireOwnership = false)]
+    public void OnChangeGameBarValueServerRpc(int newValue, ulong clientID)
     {
-        if(IsOwner)
+        if (clientID == OwnerClientId)
         {
-            _myValue.Value += newValue;
-            _enemyValue.Value -= newValue;
+            _hostValue.Value += newValue;
+            _clientValue.Value -= newValue;
 
-            if(_enemyValue.Value == 0)
+            if (_clientValue.Value == 0)
             {
                 enemyDie.Die();
             }
         }
         else
         {
-            _enemyValue.Value += newValue;
-            _myValue.Value -= newValue;
+            _clientValue.Value += newValue;
+            _hostValue.Value -= newValue;
 
-            if (_myValue.Value == 0)
+            if (_hostValue.Value == 0)
             {
                 myDie.Die();
             }
@@ -43,19 +44,19 @@ public class GameBar : NetworkBehaviour
 
     private void EnemyBarVisualChange()
     {
-        if (_enemtyRect.sizeDelta.x == _enemyValue.Value) return;
+        if (_enemtyRect.sizeDelta.x == _clientValue.Value) return;
 
         _enemtyRect.sizeDelta = Vector2.Lerp(_enemtyRect.sizeDelta, 
-                                             new Vector2(_enemyValue.Value, _enemtyRect.sizeDelta.y), 
+                                             new Vector2(_clientValue.Value, _enemtyRect.sizeDelta.y), 
                                              Time.deltaTime * _lerpSpeed);
     }
 
     private void PlayerBarVisualChange()
     {
-        if (_myRect.sizeDelta.x == _myValue.Value) return;
+        if (_myRect.sizeDelta.x == _hostValue.Value) return;
 
         _myRect.sizeDelta = Vector2.Lerp(_myRect.sizeDelta,
-                                             new Vector2(_myValue.Value, _myRect.sizeDelta.y),
+                                             new Vector2(_hostValue.Value, _myRect.sizeDelta.y),
                                              Time.deltaTime * _lerpSpeed);
     }
 

@@ -16,8 +16,6 @@ public class PlayerAttack : NetworkBehaviour
     [SerializeField] private PlayerAnimation _playerAnimation;
     [SerializeField] private PlayerState _playerState;
 
-    private bool _isAtk;
-
     private void Awake()
     {
         _gameBar = GameObject.Find("Canvas/EmptyBar").GetComponent<GameBar>();
@@ -39,21 +37,18 @@ public class PlayerAttack : NetworkBehaviour
     {
         if (_playerState.IsOnJump || _playerState.IsOnAttack) return;
 
-        _isAtk = true;
+        _playerAnimation.SetAtk(true);
     }
     
     public void AttackEndEvent()
     {
-        _isAtk = false;
-    }
-
-    private void FixedUpdate()
-    {
-        _playerAnimation.SetAttack(_isAtk);
+        _playerAnimation.SetAtk(false);
     }
 
     public void AttackLogic()
     {
+        if (!IsOwner) return;
+
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _detectRange);
         foreach (Collider2D collider in colliders)
         {
@@ -71,7 +66,7 @@ public class PlayerAttack : NetworkBehaviour
                 FeedbackManager.Instance.ShaekScreen();
                 FeedbackManager.Instance.StopTime(0.02f);
 
-                _gameBar.OnChangeGameBarValue(_atkValue);
+                _gameBar.OnChangeGameBarValueServerRpc(_atkValue, OwnerClientId);
             }
         }
     }

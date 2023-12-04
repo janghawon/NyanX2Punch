@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -26,18 +25,17 @@ public class GameManager : NetworkBehaviour
     public event Action<GameState> GameStatehanged;
     private GameState _gameState;
 
-    [SerializeField] private Transform _spawnPosition;
+    [SerializeField] private Transform _hostSpawnPos;
+    [SerializeField] private Transform _clientSpawnPos;
     public Color[] slimeColors;
 
     public NetworkList<GameData> players;
 
     public GameRole myGameRole;
 
-    private ushort _colorIdx = 0;
+    private bool _alreadyGameStart;
 
     private int _readyUserCount = 0;
-
-    public TurnManager TurnManager { get; private set; }
 
     [SerializeField] private Camera _mainCam;
 
@@ -55,8 +53,6 @@ public class GameManager : NetworkBehaviour
     {
         Instance = this;
         players = new NetworkList<GameData>();
-
-        TurnManager = GetComponent<TurnManager>();
     }
 
     private void Start()
@@ -100,7 +96,6 @@ public class GameManager : NetworkBehaviour
             clientID = clientID,
             playerName = data.name,
             ready = false,
-            colorIdx = _colorIdx
         });
     }
 
@@ -112,7 +107,6 @@ public class GameManager : NetworkBehaviour
             try
             {
                 players.Remove(data);
-                --_colorIdx;
             }
             catch
             {
@@ -140,7 +134,6 @@ public class GameManager : NetworkBehaviour
                     clientID = clientID,
                     playerName = gd.playerName,
                     ready = !gd.ready,
-                    colorIdx = gd.colorIdx
                 };
 
                 _readyUserCount += players[i].ready ? 1 : -1;
@@ -158,11 +151,13 @@ public class GameManager : NetworkBehaviour
 
     public void GameStart()
     {
-        if (!IsHost) return;
+        if (!IsHost || _alreadyGameStart) return;
         if (_readyUserCount >= 1)
         {
+            _alreadyGameStart = true;
             StartGameClientRpc();
             SpawnPlayers();
+            GameConnectManager.Instance.GameSetAndGoClientRpc();
         }
         else
         {
@@ -174,12 +169,22 @@ public class GameManager : NetworkBehaviour
     {
         foreach (var player in players)
         {
-            HostSingleton.Instnace.GamaManager.NetServer.SpawnPlayer
-            (
-                player.clientID,
-                _spawnPosition.position,
-                player.colorIdx
-            );
+            if(player.clientID == OwnerClientId)
+            {
+                HostSingleton.Instnace.GamaManager.NetServer.SpawnPlayer
+                (
+                    player.clientID,
+                    _hostSpawnPos.position
+                );
+            }
+            else
+            {
+                HostSingleton.Instnace.GamaManager.NetServer.SpawnPlayer
+                (
+                    player.clientID,
+                    _clientSpawnPos.position
+                );
+            }
         }
     }
 

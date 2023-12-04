@@ -10,7 +10,6 @@ public struct GameData : INetworkSerializable, IEquatable<GameData>
     public ulong clientID;
     public FixedString32Bytes playerName;
     public bool ready;
-    public ushort colorIdx;
 
     public bool Equals(GameData other)
     {
@@ -22,6 +21,5 @@ public struct GameData : INetworkSerializable, IEquatable<GameData>
         serializer.SerializeValue(ref clientID);
         serializer.SerializeValue(ref playerName);
         serializer.SerializeValue(ref ready);
-        serializer.SerializeValue(ref colorIdx);
     }
 }

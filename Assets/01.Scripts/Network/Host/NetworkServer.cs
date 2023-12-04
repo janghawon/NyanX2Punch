@@ -92,7 +92,7 @@ public class NetworkServer : IDisposable
         }
     }
 
-    public void SpawnPlayer(ulong clientID, Vector3 position, ushort colorIdx)
+    public void SpawnPlayer(ulong clientID, Vector3 position)
     {
         var player = GameObject.Instantiate(_playerPrefab, position, Quaternion.identity);
         player.SpawnAsPlayerObject(clientID);

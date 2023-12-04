@@ -4,12 +4,22 @@ using TMPro;
 using UnityEngine;
 using DG.Tweening;
 using Unity.Netcode;
-using System;
+
+public enum Direction
+{
+    UP,
+    DOWN,
+    RIGHT,
+    LEFT
+}
 
 public class GameReady : NetworkBehaviour
 {
     [SerializeField] private Vector2 _clientReadyPos;
     [SerializeField] private Vector2 _clientAllocationPos;
+    [SerializeField] private Vector2 _hostReadyPos;
+    [SerializeField] private Vector2 _hostAllocationPos;
+
     [SerializeField] private Transform _hostPanel;
     [SerializeField] private Transform _clientPanel;
 
@@ -35,6 +45,28 @@ public class GameReady : NetworkBehaviour
         for(int i = 0; i < _vsText.Length; i++)
         {
             _vsText[i].text = syntex;
+        }
+    }
+
+    public void ChangeMainText(Vector2 pos, float duration)
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.Append(_vsText[0].transform.DOLocalMoveY(pos.y, duration));
+        seq.Join(_vsText[1].transform.DOLocalMoveY(pos.y, duration));
+    }
+
+    [Tooltip("이 메서드의 Direction은 UP또는 DOWN만 사용 가능합니다.")]
+    public void AllPanelMove(Direction dir, float duration)
+    {
+        if(dir == Direction.UP)
+        {
+            _hostPanel.DOLocalMove(_hostReadyPos, duration);
+            _clientPanel.DOLocalMove(_clientReadyPos, duration);
+        }
+        else if(dir == Direction.DOWN)
+        {
+            _hostPanel.DOLocalMove(_hostAllocationPos, duration);
+            _clientPanel.DOLocalMove(_clientAllocationPos, duration);
         }
     }
 
@@ -86,6 +118,6 @@ public class GameReady : NetworkBehaviour
         var btn = Instantiate(_readyBtn, _clientPanel);
         btn.transform.localPosition = _clientReadyBtnTrm.localPosition;
         btn.btnText = btn.transform.Find("StateText").GetComponent<TextMeshProUGUI>();
-        btn.transform.rotation = Quaternion.identity;
+        btn.transform.localRotation = Quaternion.identity;
     }
 }
