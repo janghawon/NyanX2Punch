@@ -27,7 +27,7 @@ public class GameManager : NetworkBehaviour
 
     [SerializeField] private Transform _hostSpawnPos;
     [SerializeField] private Transform _clientSpawnPos;
-    public Color[] slimeColors;
+    [SerializeField] private GameBar _gameBar;
 
     public NetworkList<GameData> players;
 

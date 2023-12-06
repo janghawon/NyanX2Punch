@@ -48,11 +48,13 @@ public class GameReady : NetworkBehaviour
         }
     }
 
-    public void ChangeMainText(Vector2 pos, float duration)
+    public void ChangeMainText(float scale, float duration)
     {
         Sequence seq = DOTween.Sequence();
-        seq.Append(_vsText[0].transform.DOLocalMoveY(pos.y, duration));
-        seq.Join(_vsText[1].transform.DOLocalMoveY(pos.y, duration));
+        seq.Append(_vsText[0].transform.DOScale(Vector2.one * scale, duration));
+        seq.Join(_vsText[1].transform.DOScale(Vector2.one * scale, duration));
+        seq.Join(_vsText[0].DOFade(0, duration));
+        seq.Join(_vsText[1].DOFade(0, duration));
     }
 
     [Tooltip("이 메서드의 Direction은 UP또는 DOWN만 사용 가능합니다.")]

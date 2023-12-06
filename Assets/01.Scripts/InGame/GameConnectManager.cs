@@ -26,7 +26,6 @@ public class GameConnectManager : NetworkBehaviour
     [ClientRpc]
     public void GameSetAndGoClientRpc()
     {
-        Debug.Log("asd");
         _gameReady.AllPanelMove(Direction.UP, 0.5f);
         StartCoroutine(WaitTimeCo());
     }
@@ -46,6 +45,6 @@ public class GameConnectManager : NetworkBehaviour
             pm.canMovement = true;
         }
         
-        _gameReady.ChangeMainText(new Vector2(13, 700), 0.5f);
+        _gameReady.ChangeMainText(3, 1f);
     }
 }

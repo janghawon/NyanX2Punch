@@ -8,38 +8,44 @@ public class PlayerDie : NetworkBehaviour
     [SerializeField] private PlayerState _playerState;
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private Rigidbody2D _rigid;
-    [SerializeField] private GameObject _smokeParticle;
 
-    public override void OnNetworkSpawn()
+    private bool canMakeFx = true;
+    
+    [ServerRpc(RequireOwnership = false)]
+    public void DieServerRpc(bool isHost, Vector3 dir)
     {
-        GameBar gb = GameObject.Find("Canvas/EmptyBar").GetComponent<GameBar>();
-        if(IsOwner)
-        {
-            gb.myDie = this;
-        }
-        else
-        {
-            gb.enemyDie = this;
-        }
+        DieClientRpc(isHost, dir);
     }
 
-    public void Die()
+    [ClientRpc]
+    public void DieClientRpc(bool isHost, Vector3 dir)
     {
+        FeedbackManager.Instance.ShaekScreen(new Vector3(0.2f, 0.2f, 0));
+        FeedbackManager.Instance.StopTime(1f);
+
+        if (IsHost == isHost) return;
+
         _playerState.IsOnDie = true;
-        _rigid.AddForce(_playerHealth.Dir * 50, ForceMode2D.Impulse);
+        dir.y = 0.5f;
+        _rigid.AddForce(dir * 40, ForceMode2D.Impulse);
     }
 
     private void Update()
     {
-        if (!_playerState.IsOnDie) return;
-        Instantiate(_smokeParticle, transform.position, Quaternion.identity);
+        if (!_playerState.IsOnDie || Time.frameCount % 2 == 0 || !canMakeFx) return;
+        FeedbackManager.Instance.MakeFxServerRpc(FXType.smoke, transform.position);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.CompareTag("MapLimit") && _playerState.IsOnDie)
         {
-            Debug.Log(1);
+            canMakeFx = false;
+            for(int i = 0; i < 5; i++)
+            {
+                Vector3 spawnPos = (Vector3)Random.insideUnitCircle * 2 + transform.position;
+                FeedbackManager.Instance.MakeFxServerRpc(FXType.die_smoke,  spawnPos);
+            }
         }
     }
 }

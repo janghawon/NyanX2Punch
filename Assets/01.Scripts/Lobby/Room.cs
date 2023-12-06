@@ -24,6 +24,7 @@ public class Room
         _refreshBtn = refreshBtn;
 
         _refreshBtn.onClick.AddListener(HandleRefreshBtnClick);
+        HandleRefreshBtnClick();
     }
 
     private void HandleRefreshBtnClick()

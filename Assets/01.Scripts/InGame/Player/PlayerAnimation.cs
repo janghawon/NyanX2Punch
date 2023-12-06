@@ -14,13 +14,14 @@ public class PlayerAnimation : NetworkBehaviour
     private readonly int _isAtkHash = Animator.StringToHash("isAtk");
     private readonly int _isJumpHash = Animator.StringToHash("isJump");
 
-    public bool isRight;
+    private NetworkVariable<bool> _flipValue;
     private NetworkVariable<float> _moveValue;
     private NetworkVariable<bool> _atkValue;
     private NetworkVariable<bool> _jumpValue;
 
     private void Awake()
     {
+        _flipValue = new NetworkVariable<bool>();
         _moveValue = new NetworkVariable<float>();
         _atkValue = new NetworkVariable<bool>();
         _jumpValue = new NetworkVariable<bool>();
@@ -28,6 +29,7 @@ public class PlayerAnimation : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        _flipValue.OnValueChanged += HandleFlipValueChange;
         _moveValue.OnValueChanged += HandleMoveValueChange;
         _atkValue.OnValueChanged += HandleAtkValueChange;
         _jumpValue.OnValueChanged += HandleJumpValueChange;
@@ -35,6 +37,7 @@ public class PlayerAnimation : NetworkBehaviour
 
     public override void OnNetworkDespawn()
     {
+        _flipValue.OnValueChanged -= HandleFlipValueChange;
         _moveValue.OnValueChanged -= HandleMoveValueChange;
         _atkValue.OnValueChanged -= HandleAtkValueChange;
         _jumpValue.OnValueChanged -= HandleJumpValueChange;
@@ -50,7 +53,7 @@ public class PlayerAnimation : NetworkBehaviour
         _animator.SetBool(_isAtkHash, value);
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     private void SetAtkValueServerRpc(bool value)
     {
         _atkValue.Value = value;
@@ -62,25 +65,45 @@ public class PlayerAnimation : NetworkBehaviour
     }
     #endregion
 
+    #region FlipLogic
+    public void FlipController()
+    {
+        if (_moveValue.Value == 0 || _playerState.IsOnAttack) return;
+
+        if(_spriteRenderer.flipX != _moveValue.Value > 0)
+        {
+            _spriteRenderer.flipX = _moveValue.Value > 0;
+            SetValueFlipServerRpc(_spriteRenderer.flipX);
+        }
+    }
+
+    [ServerRpc]
+    private void SetValueFlipServerRpc(bool value)
+    {
+        _flipValue.Value = value;
+    }
+
+    private void HandleFlipValueChange(bool previousValue, bool newValue)
+    {
+        _spriteRenderer.flipX = newValue;
+    }
+    #endregion
+
     #region MoveLogic
     public void SetMove(float Xdir)
     {
-        if(_moveValue.Value != Xdir)
+        if (_playerState.IsOnJump)
+        {
+            _animator.SetBool(_isMoveHash, false);
+            return;
+        }
+
+        if (_moveValue.Value != Xdir)
         {
             SetValueMoveServerRpc(Xdir);
         }
         
-        FlipController();
-
-        if (_playerState.IsOnJump) return;
         _animator.SetBool(_isMoveHash, Xdir != 0);
-    }
-
-    private void FlipController()
-    {
-        if (_moveValue.Value == 0 || _playerState.IsOnAttack) return;
-        isRight = _moveValue.Value > 0;
-        _spriteRenderer.flipX = isRight;
     }
 
     [ServerRpc]
@@ -117,7 +140,5 @@ public class PlayerAnimation : NetworkBehaviour
     {
         _animator.SetBool(_isJumpHash, newValue);
     }
-
-    
     #endregion
 }

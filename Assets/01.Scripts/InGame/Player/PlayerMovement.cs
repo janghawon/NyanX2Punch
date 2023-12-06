@@ -27,10 +27,25 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        UserData data = HostSingleton.Instnace.GamaManager.NetServer.GetUserDataByClientID(OwnerClientId);
-        _nickName.text = data.name;
+        if (!IsOwner) return;
+        _inputReader.MovementEvent += HandleMovement;
+        GameConnectManager.Instance.playerMList.Add(this);
 
-        if (IsHost)
+        SetNickNameServerRpc(OwnerClientId);
+    }
+
+    [ServerRpc]
+    private void SetNickNameServerRpc(ulong clientID)
+    {
+        UserData userData = HostSingleton.Instnace.GamaManager.NetServer.GetUserDataByClientID(clientID);
+        SetNickNameClientRpc(userData.name);
+    }
+
+    [ClientRpc]
+    private void SetNickNameClientRpc(string name)
+    {
+        _nickName.text = name;
+        if(IsHost)
         {
             _nickName.color = _hostColor;
         }
@@ -38,10 +53,6 @@ public class PlayerMovement : NetworkBehaviour
         {
             _nickName.color = _clientColor;
         }
-
-        if (!IsOwner) return;
-        _inputReader.MovementEvent += HandleMovement;
-        GameConnectManager.Instance.playerMList.Add(this);
     }
 
     public override void OnNetworkDespawn()
@@ -60,6 +71,7 @@ public class PlayerMovement : NetworkBehaviour
         if (_playerState.IsOnDie || !canMovement) return;
 
         _playerAnimation.SetMove(prevpos.x - transform.position.x);
+        _playerAnimation.FlipController();
         prevpos = transform.position;
 
         if (!IsOwner) return;

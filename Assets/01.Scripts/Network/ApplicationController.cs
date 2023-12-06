@@ -18,6 +18,7 @@ public class ApplicationController : MonoBehaviour
 
     public static event Action<string> OnMessageEvent;
     public static ApplicationController Instance;
+    [SerializeField] private TitleScene _title;
 
     private void Awake()
     {
@@ -48,7 +49,7 @@ public class ApplicationController : MonoBehaviour
         ClientSingleton client = Instantiate(_clientPrefab, transform);
         client.CreateClient();
 
-        SceneManager.LoadScene(SceneList.MenuScene);
+        _title.CompleteReady();
     }
 
     public async Task<List<Lobby>> GetLobbyList()

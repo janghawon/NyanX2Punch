@@ -9,16 +9,6 @@ public class PlayerState : MonoBehaviour
     public bool IsOnAttack;
     public bool IsOnDie;
 
-    public void JumpEnd()
-    {
-        IsOnJump = false;
-    }
-
-    public void DodgeEnd()
-    {
-        IsOnDodge = false;
-    }
-
     public void AttackEnd()
     {
         IsOnAttack = false;

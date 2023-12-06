@@ -15,7 +15,7 @@ public class NetworkServer : IDisposable
     private Dictionary<string, UserData> _authIdToUserDataDictionary = new ();
 
     private NetworkObject _playerPrefab;
-    private List<NetworkObject> _playerList = new List<NetworkObject>();
+    public List<NetworkObject> playerList = new List<NetworkObject>();
 
     public NetworkServer(NetworkManager nm, NetworkObject playerPrefab)
     {
@@ -96,13 +96,13 @@ public class NetworkServer : IDisposable
     {
         var player = GameObject.Instantiate(_playerPrefab, position, Quaternion.identity);
         player.SpawnAsPlayerObject(clientID);
-        _playerList.Add(player);
+        playerList.Add(player);
 
     }
 
     public void DestroyAllPlayer()
     {
-        foreach(var p in _playerList)
+        foreach(var p in playerList)
         {
             GameObject.Destroy(p.gameObject);
         }

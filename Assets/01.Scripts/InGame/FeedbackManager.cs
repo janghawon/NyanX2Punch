@@ -8,14 +8,18 @@ public enum FXType
 {
     jump,
     impact,
-    spark
+    spark,
+    smoke,
+    die_smoke
 }
 
 public class FeedbackManager : NetworkBehaviour
 {
     public static FeedbackManager Instance;
     [SerializeField] private List<GameObject> _effectList = new List<GameObject>();
+    [SerializeField] private CinemachineVirtualCamera _vcam;
     [SerializeField] private CinemachineImpulseSource _source;
+    [SerializeField] private CinemachineFollowZoom _zoom;
 
     private void Awake()
     {
@@ -46,8 +50,9 @@ public class FeedbackManager : NetworkBehaviour
         Instantiate(_effectList[(int)type], pos, rot);
     }
 
-    public void ShaekScreen()
+    public void ShaekScreen(Vector3 value)
     {
+        _source.m_DefaultVelocity = value;
         _source.GenerateImpulse();
     }
 
@@ -61,5 +66,20 @@ public class FeedbackManager : NetworkBehaviour
         Time.timeScale = 0.3f;
         yield return new WaitForSeconds(sec);
         Time.timeScale = 1;
+    }
+
+    public void ZoomCam(Transform target, float backTime)
+    {
+        _vcam.Follow = target;
+        _zoom.m_MinFOV = 40;
+        StartCoroutine(ZoomCamCo(backTime));
+    }
+
+    IEnumerator ZoomCamCo(float backTime)
+    {
+        yield return new WaitForSeconds(backTime);
+        _vcam.Follow = null;
+        _vcam.transform.position = new Vector3(0, 0, -10);
+        _zoom.m_MinFOV = 60;
     }
 }

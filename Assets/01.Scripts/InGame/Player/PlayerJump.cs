@@ -30,6 +30,7 @@ public class PlayerJump : NetworkBehaviour
         if (_playerState.IsOnJump || _playerState.IsOnDie) return;
 
         _playerState.IsOnJump = true;
+        _playerAnimation.SetJump(true);
         FeedbackManager.Instance.MakeFxServerRpc(FXType.jump, _JumpFxSpawnPos.position);
         _rigid.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
     }
@@ -41,11 +42,7 @@ public class PlayerJump : NetworkBehaviour
         if(_rigid.velocity.y == 0)
         {
             _playerState.IsOnJump = false;
+            _playerAnimation.SetJump(false);
         }
-    }
-
-    public void JumpEnd()
-    {
-        _playerState.IsOnJump = false;
     }
 }

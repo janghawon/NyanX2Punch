@@ -23,7 +23,11 @@ public class ReadyBtn : MonoBehaviour
     }
     private void Start()
     {
-        _thisBtn.onClick.AddListener(HandleGameReady) ;
+        if(GameManager.Instance.players[0].ready)
+        {
+            _profileReady.SetReadyServerRpc(GameRole.Host, true);
+        }
+        _thisBtn.onClick.AddListener(HandleGameReady);
     }
 
     private void HandleGameReady()
