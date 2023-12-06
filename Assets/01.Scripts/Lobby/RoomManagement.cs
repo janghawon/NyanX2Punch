@@ -23,6 +23,7 @@ public class RoomManagement : MonoBehaviour
     [SerializeField] private Transform _roomElement;
     [SerializeField] private Transform _content;
     [SerializeField] private Button _refreshBtn;
+    [SerializeField] private GameObject _loadingUI;
 
     private Room _myRoom;
 
@@ -44,6 +45,7 @@ public class RoomManagement : MonoBehaviour
     private async void HandleJoinToRoom(Lobby room)
     {
         if (_isJoinWaiting) return;
+        var load = Instantiate(_loadingUI, _canvasTrm);
         _isJoinWaiting = true;
         try
         {
@@ -54,9 +56,11 @@ public class RoomManagement : MonoBehaviour
         catch (LobbyServiceException ex)
         {
             Debug.LogError(ex);
+            Destroy(load);
         }
         finally
         {
+            Destroy(load);
             _isJoinWaiting = false;
         }
     }
@@ -77,6 +81,7 @@ public class RoomManagement : MonoBehaviour
     public async void HandleCreateLobby(string roomName, Action panelEndFunc, TextMeshProUGUI syntex)
     {
         if (_isJoinWaiting) return;
+        var load = Instantiate(_loadingUI, _canvasTrm);
         _isJoinWaiting = true;
 
         string username = PlayerPrefs.GetString(nameKey);
@@ -90,6 +95,7 @@ public class RoomManagement : MonoBehaviour
         {
             syntex.text = "룸 개설에 실패했습니다.";
             syntex.color = Color.red;
+            Destroy(load);
         }
 
         _isJoinWaiting = false;

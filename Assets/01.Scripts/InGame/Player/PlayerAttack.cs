@@ -59,13 +59,13 @@ public class PlayerAttack : NetworkBehaviour
 
             if (collider.TryGetComponent<PlayerHealth>(out PlayerHealth ph))
             {
+                _gameBar.OnChangeGameBarValueServerRpc(_atkValue, OwnerClientId);
                 Vector3 dir = (ph.hitTrm.position - transform.position).normalized;
                 if ((dir.x >= 0 && !_isLookRight) || (dir.x < 0 && _isLookRight)) return;
 
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
                 MakeFeedbackServerRpc(dir, ph.hitTrm.position, angle);
-                _gameBar.OnChangeGameBarValueServerRpc(_atkValue, OwnerClientId);
                 ph.Hit(dir);
             }
         }

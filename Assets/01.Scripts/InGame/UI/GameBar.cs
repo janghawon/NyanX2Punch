@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using TMPro;
 
 public class GameBar : NetworkBehaviour
 {
@@ -13,7 +14,10 @@ public class GameBar : NetworkBehaviour
     public NetworkVariable<int> hostValue = new NetworkVariable<int>(500);
 
     [SerializeField] private float _lerpSpeed;
+    [SerializeField] private TextMeshProUGUI _finalText;
 
+    [SerializeField] private string _winText;
+    [SerializeField] private string _loseText;
     private bool _isGameEnd;
 
     [ServerRpc(RequireOwnership = false)]
@@ -32,9 +36,50 @@ public class GameBar : NetworkBehaviour
             clientValue.Value += newValue;
         }
 
-        if(hostValue.Value == 0 || clientValue.Value == 0)
+        if(hostValue.Value == 100)
+        {
+            SetFinalTextClientRpc(GameRole.Client);
+        }
+        else if(clientValue.Value == 100)
+        {
+            SetFinalTextClientRpc(GameRole.Host);
+        }
+        else if(hostValue.Value == 0 || clientValue.Value == 0)
         {
             _isGameEnd = true;
+            GameManager.Instance.winPlayerClientID = clientID;
+        }
+        else
+        {
+            _finalText.gameObject.SetActive(false);
+        }
+    }
+
+    [ClientRpc]
+    private void SetFinalTextClientRpc(GameRole whoWin)
+    {
+        _finalText.gameObject.SetActive(true);
+        if(whoWin == GameRole.Host)
+        {
+            if(IsHost)
+            {
+                _finalText.text = _winText;
+            }
+            else
+            {
+                _finalText.text = _loseText;
+            }
+        }
+        else
+        {
+            if (IsHost)
+            {
+                _finalText.text = _loseText;
+            }
+            else
+            {
+                _finalText.text = _winText;
+            }
         }
     }
 

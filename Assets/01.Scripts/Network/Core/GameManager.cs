@@ -32,6 +32,7 @@ public class GameManager : NetworkBehaviour
     public NetworkList<GameData> players;
 
     public GameRole myGameRole;
+    public ulong winPlayerClientID;
 
     private bool _alreadyGameStart;
 

@@ -1313,6 +1313,7 @@ MonoBehaviour:
   _roomElement: {fileID: 1481005557312559378, guid: d18b495200d01bc49b962a522c70e578, type: 3}
   _content: {fileID: 1589613259}
   _refreshBtn: {fileID: 2029385531}
+  _loadingUI: {fileID: 6621197096402724556, guid: 9ff5dab217911414283714b95af49eb0, type: 3}
 --- !u!4 &1229703330
 Transform:
   m_ObjectHideFlags: 0

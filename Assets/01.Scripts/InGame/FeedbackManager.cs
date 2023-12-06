@@ -10,7 +10,8 @@ public enum FXType
     impact,
     spark,
     smoke,
-    die_smoke
+    die_smoke,
+    burst
 }
 
 public class FeedbackManager : NetworkBehaviour

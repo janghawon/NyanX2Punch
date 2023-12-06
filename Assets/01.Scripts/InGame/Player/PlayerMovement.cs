@@ -30,29 +30,22 @@ public class PlayerMovement : NetworkBehaviour
         if (!IsOwner) return;
         _inputReader.MovementEvent += HandleMovement;
         GameConnectManager.Instance.playerMList.Add(this);
-
-        SetNickNameServerRpc(OwnerClientId);
+        Color selectColor = IsHost ? _hostColor : _clientColor;
+        SetNickNameServerRpc(OwnerClientId, selectColor);
     }
 
     [ServerRpc]
-    private void SetNickNameServerRpc(ulong clientID)
+    private void SetNickNameServerRpc(ulong clientID, Color color)
     {
         UserData userData = HostSingleton.Instnace.GamaManager.NetServer.GetUserDataByClientID(clientID);
-        SetNickNameClientRpc(userData.name);
+        SetNickNameClientRpc(userData.name, color);
     }
 
     [ClientRpc]
-    private void SetNickNameClientRpc(string name)
+    private void SetNickNameClientRpc(string name, Color color)
     {
         _nickName.text = name;
-        if(IsHost)
-        {
-            _nickName.color = _hostColor;
-        }
-        else
-        {
-            _nickName.color = _clientColor;
-        }
+        _nickName.color = color;
     }
 
     public override void OnNetworkDespawn()

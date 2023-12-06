@@ -10,16 +10,43 @@ public class GameConnectManager : NetworkBehaviour
     [SerializeField] private GameReady _gameReady;
     [SerializeField] private int _readyTime;
     public List<PlayerMovement> playerMList = new List<PlayerMovement>();
+    [SerializeField] private Transform _canTrm;
+    [SerializeField] private GameEndPanel _endPanel;
 
     private void Awake()
     {
         Instance = this;
     }
 
+    public void GameEndTurmSet(float sec)
+    {
+        StartCoroutine(GameEndTurmSetCo(sec));
+    }
+
+    IEnumerator GameEndTurmSetCo(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        GameEndServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void GameEndServerRpc()
+    {
+        UserData ud = HostSingleton.Instnace.GamaManager.NetServer.
+                      GetUserDataByClientID(GameManager.Instance.winPlayerClientID);
+        GameEndClientRpc(ud.name);
+    }
+
+    [ClientRpc]
+    private void GameEndClientRpc(string name)
+    {
+        var panel = Instantiate(_endPanel, _canTrm);
+        panel.winName = name;
+    }
+
     [ServerRpc(RequireOwnership = false)]
     public void GameSetAndGoServerRpc()
     {
-        Debug.Log("이게 왜 실행이 안되는 것이야?");
         GameSetAndGoClientRpc();
     }
 
