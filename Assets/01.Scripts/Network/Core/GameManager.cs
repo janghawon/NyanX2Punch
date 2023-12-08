@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Netcode;
+using Unity.Services.Authentication;
+using Unity.Services.Lobbies;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -28,15 +31,15 @@ public class GameManager : NetworkBehaviour
     [SerializeField] private Transform _hostSpawnPos;
     [SerializeField] private Transform _clientSpawnPos;
     [SerializeField] private GameBar _gameBar;
+    [SerializeField] private GameReady _gameReady;
 
     public NetworkList<GameData> players;
 
     public GameRole myGameRole;
+    public ulong myClientID;
     public ulong winPlayerClientID;
 
     private bool _alreadyGameStart;
-
-    private int _readyUserCount = 0;
 
     [SerializeField] private Camera _mainCam;
 
@@ -117,13 +120,14 @@ public class GameManager : NetworkBehaviour
         }
     }
 
-    public void GameReady()
+    public void GameReady(bool isReady)
     {
-        SendReadyStateServerRpc(NetworkManager.Singleton.LocalClientId);
+        SendReadyStateServerRpc(NetworkManager.Singleton.LocalClientId, isReady);
+        _alreadyGameStart = false;
     }
 
     [ServerRpc(RequireOwnership = false)]
-    private void SendReadyStateServerRpc(ulong clientID)
+    private void SendReadyStateServerRpc(ulong clientID, bool isReady)
     {
         for(int i = 0; i < players.Count; i++)
         {
@@ -134,14 +138,11 @@ public class GameManager : NetworkBehaviour
                 {
                     clientID = clientID,
                     playerName = gd.playerName,
-                    ready = !gd.ready,
+                    ready = isReady,
                 };
-
-                _readyUserCount += players[i].ready ? 1 : -1;
                 break;
             }
         }
-        
     }
 
     public override void OnDestroy()
@@ -150,20 +151,56 @@ public class GameManager : NetworkBehaviour
         players?.Dispose();
     }
 
-    public void GameStart()
+    public bool GameStart()
     {
-        if (!IsHost || _alreadyGameStart) return;
-        if (_readyUserCount >= 1)
+        if (!IsHost || _alreadyGameStart) return false;
+
+        for(int i = 0; i < players.Count; i++)
         {
-            _alreadyGameStart = true;
-            StartGameClientRpc();
-            SpawnPlayers();
-            GameConnectManager.Instance.GameSetAndGoClientRpc();
+            if (!players[i].ready) return false;
+        }
+
+        _alreadyGameStart = true;
+        StartGameClientRpc();
+        SpawnPlayers();
+        GameConnectManager.Instance.GameSetAndGoClientRpc();
+        return true;
+    }
+
+    public void GameExit(ulong clientID)
+    {
+        HandleGameExitServerRpc(clientID);
+    }
+
+    [ServerRpc]
+    private void HandleGameExitServerRpc(ulong clientID)
+    {
+        HandleGameExitAsync(clientID);
+    }
+
+    
+    private async void HandleGameExitAsync(ulong clientID)
+    {
+        if (myGameRole == GameRole.Host)
+        {
+            await Lobbies.Instance.DeleteLobbyAsync(lobbyID);
+
+            foreach(GameData gd in players)
+                ExitPlayerClientRpc(gd.clientID);
         }
         else
         {
-            Debug.Log("플레이어들이 모두 준비를 완료하여야 게임을 시작할 수 있습니다.");
+            string playerId = AuthenticationService.Instance.PlayerId;
+            _gameReady.RemoveClientPanelServerRpc();
+            await Lobbies.Instance.RemovePlayerAsync(lobbyID, playerId);
+            ExitPlayerClientRpc(clientID);
         }
+    }
+
+    [ClientRpc]
+    private void ExitPlayerClientRpc(ulong clientID)
+    {
+        SceneManager.LoadScene(SceneList.MenuScene);
     }
 
     private void SpawnPlayers()

@@ -13,7 +13,6 @@ using UnityEngine.UI;
 public class RoomManagement : MonoBehaviour
 {
     private bool _isJoinWaiting = false;
-    private bool _isDestroyWaiting = false;
     public const string nameKey = "userName";
 
     [SerializeField] private Transform _canvasTrm;
@@ -33,13 +32,6 @@ public class RoomManagement : MonoBehaviour
 
         _myRoom = new Room(_roomElement, _content, _refreshBtn);
         _myRoom.JoinRoomEvent += HandleJoinToRoom;
-        _myRoom.DestroyRoomEvent += HandleDestroyRoom;
-    }
-
-    private async void HandleDestroyRoom(Lobby room)
-    {
-        if (_isDestroyWaiting) return;
-        _isDestroyWaiting = true;
     }
 
     private async void HandleJoinToRoom(Lobby room)

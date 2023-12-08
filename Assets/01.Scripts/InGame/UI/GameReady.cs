@@ -57,6 +57,17 @@ public class GameReady : NetworkBehaviour
         seq.Join(_vsText[1].DOFade(0, duration));
     }
 
+    public void ResetMainText()
+    {
+        for (int i = 0; i < _vsText.Length; i++)
+        {
+            _vsText[i].text = "VS";
+            _vsText[i].transform.localScale = Vector3.one;
+            Color currentColor = _vsText[i].color;
+            _vsText[i].color = new Color(currentColor.r, currentColor.g, currentColor.b, 1);
+        }
+    }
+
     [Tooltip("이 메서드의 Direction은 UP또는 DOWN만 사용 가능합니다.")]
     public void AllPanelMove(Direction dir, float duration)
     {
@@ -74,7 +85,12 @@ public class GameReady : NetworkBehaviour
 
     private void Start()
     {
-        if(IsHost)
+        PanelSetting();
+    }
+
+    public void PanelSetting()
+    {
+        if (IsHost)
         {
             UploadHostPanelServerRpc(GameManager.Instance.players[0].playerName.ToString());
         }
@@ -96,15 +112,25 @@ public class GameReady : NetworkBehaviour
         UploadClientPanelClientRpc(name);
     }
 
+    [ServerRpc]
+    public void RemoveClientPanelServerRpc()
+    {
+        _clientPanel.DOLocalMoveY(_clientReadyPos.y, 0.5f);
+    }
+
     [ClientRpc]
     private void UploadHostPanelClientRpc(string name)
     {
         _hostName.text = name.ToString();
+        _hostPanel.DOLocalMoveY(_hostAllocationPos.y, 0.5f);
+
+        if (!IsHost) return;
         var btn = Instantiate(_readyBtn, _hostPanel);
         btn.transform.localPosition = _hostReadyBtnTrm.localPosition;
-        btn.btnText = btn.transform.Find("StateText").GetComponent<TextMeshProUGUI>();
 
-        Instantiate(_startBtn, _hostPanel);
+        btn.ReadyBtnSetting();
+
+        Instantiate(_startBtn, _hostPanel).StartBtnSetting();
     }
 
     [ClientRpc]
@@ -114,12 +140,12 @@ public class GameReady : NetworkBehaviour
         _clientPanel.DOLocalMoveY(_clientAllocationPos.y, 0.5f);
 
         if (IsHost) return;
-
         _hostName.text = GameManager.Instance.players[0].playerName.ToString();
 
         var btn = Instantiate(_readyBtn, _clientPanel);
         btn.transform.localPosition = _clientReadyBtnTrm.localPosition;
-        btn.btnText = btn.transform.Find("StateText").GetComponent<TextMeshProUGUI>();
         btn.transform.localRotation = Quaternion.identity;
+
+        btn.ReadyBtnSetting();
     }
 }

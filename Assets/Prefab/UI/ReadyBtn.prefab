@@ -136,8 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _acceptColor: {r: 0.57788247, g: 1, b: 0.4660377, a: 1}
   _cancleColor: {r: 1, g: 0.48627448, b: 0.54133195, a: 1}
-  btnText: {fileID: 0}
-  nameText: {fileID: 0}
+  btnText: {fileID: 5980617650603326365}
 --- !u!1 &1714434378004559859
 GameObject:
   m_ObjectHideFlags: 0

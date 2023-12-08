@@ -20,6 +20,21 @@ public class GameBar : NetworkBehaviour
     [SerializeField] private string _loseText;
     private bool _isGameEnd;
 
+    [ServerRpc]
+    public void ResetGameBarvalueServerRpc()
+    {
+        clientValue.Value = 500;
+        hostValue.Value = 500;
+        ResetFinalTextClientRpc();
+        _isGameEnd = false;
+    }
+
+    [ClientRpc]
+    private void ResetFinalTextClientRpc()
+    {
+        _finalText.gameObject.SetActive(false);
+    }
+
     [ServerRpc(RequireOwnership = false)]
     public void OnChangeGameBarValueServerRpc(int newValue, ulong clientID)
     {

@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-public class GameConnectManager : NetworkBehaviour
+public class GameConnectManager : NetworkBehaviour 
 {
     public static GameConnectManager Instance;
     [SerializeField] private GameReady _gameReady;
+    [SerializeField] private GameBar _gameBar;
     [SerializeField] private int _readyTime;
     public List<PlayerMovement> playerMList = new List<PlayerMovement>();
     [SerializeField] private Transform _canTrm;
@@ -16,6 +17,22 @@ public class GameConnectManager : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
+    }
+
+    public void ResetGame()
+    {
+        _gameReady.ResetMainText();
+        _gameReady.PanelSetting();
+        _gameBar.ResetGameBarvalueServerRpc();
+    }
+
+    [ServerRpc]
+    public void UnSetPlayerServerRpc()
+    {
+        foreach(NetworkObject n in HostSingleton.Instnace.GamaManager.NetServer.playerList)
+        {
+            n.Despawn(false);
+        }
     }
 
     public void GameEndTurmSet(float sec)

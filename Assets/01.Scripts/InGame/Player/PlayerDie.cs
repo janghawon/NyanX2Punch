@@ -46,8 +46,9 @@ public class PlayerDie : NetworkBehaviour
                 Vector3 spawnPos = (Vector3)Random.insideUnitCircle * 2 + transform.position;
                 FeedbackManager.Instance.MakeFxServerRpc(FXType.die_smoke,  spawnPos);
             }
+            
             GameConnectManager.Instance.GameEndTurmSet(1);
-            Destroy(gameObject);
+            GameConnectManager.Instance.UnSetPlayerServerRpc();
         }
     }
 }

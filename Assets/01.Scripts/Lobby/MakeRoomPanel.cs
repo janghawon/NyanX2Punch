@@ -49,7 +49,6 @@ public class MakeRoomPanel : MonoBehaviour
     {
         if(CheckCanMakeRoom(roomname))
         {
-            Debug.Log("¹æ ÆÄ");
             UnActivePanel();
             roomManageMent.HandleCreateLobby(roomname, UnActivePanel, _syntex);
         }

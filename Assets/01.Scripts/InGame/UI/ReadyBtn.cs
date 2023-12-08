@@ -10,8 +10,7 @@ public class ReadyBtn : MonoBehaviour
     [SerializeField] private Color _acceptColor;
     [SerializeField] private Color _cancleColor;
 
-    public TextMeshProUGUI btnText;
-    public TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI btnText;
     private Button _thisBtn;
     private Image _img;
 
@@ -21,18 +20,19 @@ public class ReadyBtn : MonoBehaviour
         _img = _thisBtn.GetComponent<Image>();
         _profileReady = GameObject.Find("Canvas/ReadyUI").GetComponent<ProfileReady>();
     }
-    private void Start()
+
+    public void ReadyBtnSetting()
     {
-        if(GameManager.Instance.players[0].ready)
+        HandleGameReadyCancle();
+        if (GameManager.Instance.players[0].ready)
         {
             _profileReady.SetReadyServerRpc(GameRole.Host, true);
         }
-        _thisBtn.onClick.AddListener(HandleGameReady);
     }
 
     private void HandleGameReady()
     {
-        GameManager.Instance.GameReady();
+        GameManager.Instance.GameReady(true);
         _img.color = _cancleColor;
         btnText.text = "준비 해제?";
         _profileReady.SetReadyServerRpc(GameManager.Instance.myGameRole, true);
@@ -43,7 +43,7 @@ public class ReadyBtn : MonoBehaviour
 
     private void HandleGameReadyCancle()
     {
-        GameManager.Instance.GameReady();
+        GameManager.Instance.GameReady(false);
         _img.color = _acceptColor;
         btnText.text = "준비 완료!";
         _profileReady.SetReadyServerRpc(GameManager.Instance.myGameRole, false);

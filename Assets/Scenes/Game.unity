@@ -1032,7 +1032,9 @@ MonoBehaviour:
   _hostSpawnPos: {fileID: 1971713101}
   _clientSpawnPos: {fileID: 639679854}
   _gameBar: {fileID: 2060111632}
+  _gameReady: {fileID: 388463591}
   myGameRole: 0
+  myClientID: 0
   winPlayerClientID: 0
   _mainCam: {fileID: 758010521}
 --- !u!4 &689569670
@@ -2214,6 +2216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameReady: {fileID: 388463591}
+  _gameBar: {fileID: 2060111632}
   _readyTime: 3
   playerMList: []
   _canTrm: {fileID: 586960723}

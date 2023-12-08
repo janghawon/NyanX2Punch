@@ -14,11 +14,17 @@ public class StartBtn : MonoBehaviour
 
     private void Start()
     {
+        name = "GameStartBtn";
+    }
+
+    public void StartBtnSetting()
+    {
         _thisBtn.onClick.AddListener(HandleGameStart);
     }
 
     private void HandleGameStart()
     {
-        GameManager.Instance.GameStart();
+        if(GameManager.Instance.GameStart())
+            _thisBtn.onClick.RemoveAllListeners();
     }    
 }
