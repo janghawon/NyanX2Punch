@@ -62,6 +62,7 @@ public class GameManager : NetworkBehaviour
     private void Start()
     {
         _gameState = GameState.Ready;
+        Debug.Log($"Lobby Is Running! (LobbyID : {HostSingleton.Instnace.GamaManager.lobbyID})");
     }
 
     public override void OnNetworkSpawn()
@@ -167,38 +168,42 @@ public class GameManager : NetworkBehaviour
         return true;
     }
 
-    public void GameExit(ulong clientID)
-    {
-        HandleGameExitServerRpc(clientID);
-    }
-
-    [ServerRpc]
-    private void HandleGameExitServerRpc(ulong clientID)
-    {
-        HandleGameExitAsync(clientID);
-    }
-
     
-    private async void HandleGameExitAsync(ulong clientID)
+    [ServerRpc(RequireOwnership = false)]
+    public void HandleGameExitServerRpc(ulong clientID)
+    {
+        string lobbyID = HostSingleton.Instnace.GamaManager.lobbyID;
+        GameExitClientRpc(clientID, lobbyID);
+    }
+
+    [ClientRpc]
+    private void GameExitClientRpc(ulong clientID, string lobbyID)
+    {
+        if (clientID != OwnerClientId) return;
+
+        HandleGameExitAsync(lobbyID);
+    }
+    
+    private async void HandleGameExitAsync(string lobbyID)
     {
         if (myGameRole == GameRole.Host)
         {
             await Lobbies.Instance.DeleteLobbyAsync(lobbyID);
 
-            foreach(GameData gd in players)
-                ExitPlayerClientRpc(gd.clientID);
+            ExitPlayerClientRpc();
         }
         else
         {
+            Debug.Log("Im client");
             string playerId = AuthenticationService.Instance.PlayerId;
             _gameReady.RemoveClientPanelServerRpc();
             await Lobbies.Instance.RemovePlayerAsync(lobbyID, playerId);
-            ExitPlayerClientRpc(clientID);
+            SceneManager.LoadScene(SceneList.MenuScene);
         }
     }
 
     [ClientRpc]
-    private void ExitPlayerClientRpc(ulong clientID)
+    private void ExitPlayerClientRpc()
     {
         SceneManager.LoadScene(SceneList.MenuScene);
     }

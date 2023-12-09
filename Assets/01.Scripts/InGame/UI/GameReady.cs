@@ -112,7 +112,7 @@ public class GameReady : NetworkBehaviour
         UploadClientPanelClientRpc(name);
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void RemoveClientPanelServerRpc()
     {
         _clientPanel.DOLocalMoveY(_clientReadyPos.y, 0.5f);

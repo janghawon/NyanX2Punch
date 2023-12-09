@@ -26,7 +26,7 @@ public class RoomManagement : MonoBehaviour
 
     private Room _myRoom;
 
-    private void Start()
+    private void OnEnable()
     {
         RefreshPlayerName();
 

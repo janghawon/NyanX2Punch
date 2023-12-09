@@ -17,7 +17,7 @@ public class HostGameManager : IDisposable
     public NetworkServer NetServer { get; private set; }
     private Allocation _allocation;
     private string _joinCode;
-    private string _lobbyID;
+    public string lobbyID;
     private const int _maxConnections = 2;
 
     public event Action<string, ulong> OnPlayerConnect;
@@ -49,7 +49,7 @@ public class HostGameManager : IDisposable
                 }
             };
             Lobby lobby = await Lobbies.Instance.CreateLobbyAsync(lobbyname, _maxConnections, lobbyOptions);
-            _lobbyID = lobby.Id;
+            lobbyID = lobby.Id;
             HostSingleton.Instnace.StartCoroutine(HeartBeatLobby(15));
 
             NetServer = new NetworkServer(NetworkManager.Singleton, _playPrefab);
@@ -86,7 +86,7 @@ public class HostGameManager : IDisposable
 
     public async void ShutdownAsync()
     {
-        if(!string.IsNullOrEmpty(_lobbyID))
+        if(!string.IsNullOrEmpty(lobbyID))
         {
             if(HostSingleton.Instnace != null)
             {
@@ -96,7 +96,7 @@ public class HostGameManager : IDisposable
             try
             {
                 Debug.Log("dsd");
-                await Lobbies.Instance.DeleteLobbyAsync(_lobbyID);
+                await Lobbies.Instance.DeleteLobbyAsync(lobbyID);
             }
             catch(LobbyServiceException ex)
             {
@@ -106,7 +106,7 @@ public class HostGameManager : IDisposable
 
         NetServer.OnClientLeft -= HandleClinetLeft;
         NetServer.OnClientJoin -= HandleClientJoin;
-        _lobbyID = string.Empty;
+        lobbyID = string.Empty;
         NetServer?.Dispose();
     }
 
@@ -115,7 +115,7 @@ public class HostGameManager : IDisposable
         var timer = new WaitForSecondsRealtime(time);
         while(true)
         {
-            Lobbies.Instance.SendHeartbeatPingAsync(_lobbyID);
+            Lobbies.Instance.SendHeartbeatPingAsync(lobbyID);
             yield return timer;
         }
     }
