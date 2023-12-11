@@ -19,6 +19,11 @@ public class GameConnectManager : NetworkBehaviour
         Instance = this;
     }
 
+    private void Start()
+    {
+        AudioManager.Instance.PlayBGM(BGMType.battle);
+    }
+
     public void ResetGame()
     {
         _gameReady.ResetMainText();
@@ -27,7 +32,7 @@ public class GameConnectManager : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void UnSetPlayerServerRpc()
+    private void UnSetPlayerServerRpc()
     {
         HostSingleton.Instnace.GamaManager.NetServer.DestroyAllPlayer();
     }
@@ -40,6 +45,7 @@ public class GameConnectManager : NetworkBehaviour
     IEnumerator GameEndTurmSetCo(float sec)
     {
         yield return new WaitForSeconds(sec);
+        UnSetPlayerServerRpc();
         GameEndServerRpc();
     }
 
@@ -54,6 +60,7 @@ public class GameConnectManager : NetworkBehaviour
     [ClientRpc]
     private void GameEndClientRpc(string name)
     {
+        AudioManager.Instance.PlayBGM(BGMType.victory);
         var panel = Instantiate(_endPanel, _canTrm);
         panel.winName = name;
     }
@@ -73,6 +80,7 @@ public class GameConnectManager : NetworkBehaviour
 
     IEnumerator WaitTimeCo()
     {
+        AudioManager.Instance.PlaySFX(SFXType.gogogo);
         for(int i = _readyTime; i > 0; i--)
         {
             _gameReady.ChangeMainText(i.ToString());

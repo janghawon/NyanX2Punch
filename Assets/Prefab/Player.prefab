@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4e7d3ae3a958db44bddeb5083e6e510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 1038850942689829301}
   _playerState: {fileID: 4151368865980783694}
   _playerHealth: {fileID: 6951251148592703389}
   _rigid: {fileID: 4123758342123215664}
@@ -754,6 +755,7 @@ MonoBehaviour:
   _playerAnimation: {fileID: 3014675563429104949}
   _playerState: {fileID: 4151368865980783694}
   _spriteRenderer: {fileID: 1038850942689829301}
+  _atkCool: 0.8
 --- !u!114 &4151368865980783694
 MonoBehaviour:
   m_ObjectHideFlags: 0

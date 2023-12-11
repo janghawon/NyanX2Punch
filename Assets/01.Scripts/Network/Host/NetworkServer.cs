@@ -84,7 +84,7 @@ public class NetworkServer : IDisposable
         _networkManager.OnServerStarted -= OnServerReady;
         _networkManager.OnClientDisconnectCallback -= OnClientDisconnect;
 
-        HostSingleton.Instnace.GamaManager.ShutdownAsync();
+        //HostSingleton.Instnace.GamaManager.ShutdownAsync();
 
         if (_networkManager.IsListening)
         {

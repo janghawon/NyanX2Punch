@@ -23,6 +23,8 @@ public class HostGameManager : IDisposable
     public event Action<string, ulong> OnPlayerConnect;
     public event Action<string, ulong> OnPlayerDisconnect;
 
+    public MapType selectMapType;
+
     private NetworkObject _playPrefab;
 
     public HostGameManager(NetworkObject playPrefab)
@@ -92,10 +94,9 @@ public class HostGameManager : IDisposable
             {
                 HostSingleton.Instnace.StopCoroutine(nameof(HeartBeatLobby));
             }
-
+            
             try
             {
-                Debug.Log("dsd");
                 await Lobbies.Instance.DeleteLobbyAsync(lobbyID);
             }
             catch(LobbyServiceException ex)

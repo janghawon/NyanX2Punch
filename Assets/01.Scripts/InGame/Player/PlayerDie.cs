@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerDie : NetworkBehaviour
 {
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private PlayerState _playerState;
     [SerializeField] private PlayerHealth _playerHealth;
     [SerializeField] private Rigidbody2D _rigid;
@@ -21,7 +22,7 @@ public class PlayerDie : NetworkBehaviour
     public void DieClientRpc(bool isHost, Vector3 dir)
     {
         FeedbackManager.Instance.ShaekScreen(new Vector3(0.2f, 0.2f, 0));
-        FeedbackManager.Instance.StopTime(0.5f, 0.2f);
+        FeedbackManager.Instance.StopTime(0.4f, 0.1f);
 
         if (IsHost == isHost) return;
 
@@ -33,7 +34,7 @@ public class PlayerDie : NetworkBehaviour
     private void Update()
     {
         if (!_playerState.IsOnDie || Time.frameCount % 2 == 0 || !canMakeFx) return;
-        FeedbackManager.Instance.MakeFxServerRpc(FXType.smoke, transform.position);
+        FeedbackManager.Instance.MakeFxClientRpc(FXType.smoke, transform.position);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -46,9 +47,9 @@ public class PlayerDie : NetworkBehaviour
                 Vector3 spawnPos = (Vector3)Random.insideUnitCircle * 2 + transform.position;
                 FeedbackManager.Instance.MakeFxServerRpc(FXType.die_smoke,  spawnPos);
             }
-            
+
+            _spriteRenderer.enabled = false;
             GameConnectManager.Instance.GameEndTurmSet(1);
-            GameConnectManager.Instance.UnSetPlayerServerRpc();
         }
     }
 }

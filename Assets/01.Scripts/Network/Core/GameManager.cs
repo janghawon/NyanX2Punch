@@ -63,6 +63,19 @@ public class GameManager : NetworkBehaviour
     {
         _gameState = GameState.Ready;
         Debug.Log($"Lobby Is Running! (LobbyID : {HostSingleton.Instnace.GamaManager.lobbyID})");
+
+        NetworkManager.Singleton.OnClientStopped += HandleGoToMenu;
+    }
+
+    private void HandleGoToMenu(bool obj)
+    {
+        SceneManager.LoadScene(SceneList.MenuScene);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void GameExitServerRpc()
+    {
+        HostSingleton.Instnace.GamaManager.ShutdownAsync();
     }
 
     public override void OnNetworkSpawn()
@@ -169,25 +182,7 @@ public class GameManager : NetworkBehaviour
     }
 
     
-    [ServerRpc(RequireOwnership = false)]
-    public void HandleGameExitServerRpc()
-    {
-        string lobbyID = HostSingleton.Instnace.GamaManager.lobbyID;
-        HandleGameExitAsync(lobbyID);
-    }
-
-    private async void HandleGameExitAsync(string lobbyID)
-    {
-        await Lobbies.Instance.DeleteLobbyAsync(lobbyID);
-
-        ExitPlayerClientRpc();
-    }
-
-    [ClientRpc]
-    private void ExitPlayerClientRpc()
-    {
-        Application.Quit();
-    }
+    
 
     private void SpawnPlayers()
     {

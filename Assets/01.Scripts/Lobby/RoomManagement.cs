@@ -29,6 +29,7 @@ public class RoomManagement : MonoBehaviour
 
     private void OnEnable()
     {
+        AudioManager.Instance.PlayBGM(BGMType.lobby);
         RefreshPlayerName();
 
         _myRoom = new Room(_roomElement, _content, _refreshBtn);

@@ -10,9 +10,6 @@ public class PlayerHealth : NetworkBehaviour
     [SerializeField] private PlayerDie _pDie;
     private GameBar _gamebar;
 
-    public Action<bool, Vector3> _clientDieAction;
-    public Action<bool, Vector3> _hostDieAction;
-
     private void Awake()
     {
         _gamebar = GameObject.Find("Canvas/EmptyBar").GetComponent<GameBar>();
@@ -22,7 +19,6 @@ public class PlayerHealth : NetworkBehaviour
     {
         if (IsHost)
         {
-            _clientDieAction += _pDie.DieServerRpc;
             if(_gamebar.clientValue.Value == 0)
             {
                 _pDie.DieServerRpc(IsHost, dir);
@@ -30,7 +26,6 @@ public class PlayerHealth : NetworkBehaviour
         }
         else
         {
-            _hostDieAction += _pDie.DieClientRpc;
             if(_gamebar.hostValue.Value == 100)
             {
                 _pDie.DieServerRpc(IsHost, dir);

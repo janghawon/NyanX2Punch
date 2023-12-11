@@ -53,7 +53,6 @@ public class ModifyPlayerNamePanel : MonoBehaviour
     {
         if (CheckCanModifyName(playername))
         {
-            Debug.Log("닉네임 설정");
             PlayerPrefs.SetString(nameKey, playername);
             roomManageMent.RefreshPlayerName();
             UnActivePanel();

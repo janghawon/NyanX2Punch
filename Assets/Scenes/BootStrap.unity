@@ -1305,7 +1305,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 1975154275753449942, guid: 80441edf5d028dd4591427e3b9ebfa9c, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.623
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1406,13 +1406,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 4e341b2f3321c9147a25756e7d720525, type: 3}
   - {fileID: 8300000, guid: a7e48e4bc9e956841ab2f1d77adf58b7, type: 3}
   - {fileID: 8300000, guid: 047b0771a491d534b913bed94b6ac248, type: 3}
+  - {fileID: 8300000, guid: e68983c4f291fe7478f757860ec7f8bb, type: 3}
   _bgmClipList:
   - {fileID: 8300000, guid: 49f2d42fcaa152d4395e8985a87e1dfa, type: 3}
   - {fileID: 8300000, guid: 02afed5c7b34dca41b99b7093694543d, type: 3}
   - {fileID: 8300000, guid: 7645952e83273b54e912b8fddae45f19, type: 3}
   - {fileID: 8300000, guid: e9901b0737af2ad41bcb9d9cd4f8304e, type: 3}
-  _sfxSource: {fileID: 0}
-  _bgmSource: {fileID: 0}
+  _sfxSource: {fileID: 999396372}
+  _bgmSource: {fileID: 999396369}
 --- !u!4 &999396371
 Transform:
   m_ObjectHideFlags: 0

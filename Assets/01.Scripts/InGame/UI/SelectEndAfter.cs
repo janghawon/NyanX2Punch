@@ -44,11 +44,12 @@ public class SelectEndAfter : NetworkBehaviour
 
     public void ExitGame()
     {
-        GameManager.Instance.HandleGameExitServerRpc();
+        GameManager.Instance.GameExitServerRpc();
     }
 
     public void GameSet()
     {
         GameConnectManager.Instance.ResetGame();
+        AudioManager.Instance.PlayBGM(BGMType.battle);
     }
 }

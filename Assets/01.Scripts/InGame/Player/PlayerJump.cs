@@ -33,6 +33,8 @@ public class PlayerJump : NetworkBehaviour
         _playerAnimation.SetJump(true);
         FeedbackManager.Instance.MakeFxServerRpc(FXType.jump, _JumpFxSpawnPos.position);
         _rigid.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+
+        AudioManager.Instance.PlaySFX(SFXType.jump);
     }
 
     private void FixedUpdate()

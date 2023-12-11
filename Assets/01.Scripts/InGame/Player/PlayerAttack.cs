@@ -17,7 +17,11 @@ public class PlayerAttack : NetworkBehaviour
     [SerializeField] private PlayerAnimation _playerAnimation;
     [SerializeField] private PlayerState _playerState;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+
     private bool _isLookRight => !_spriteRenderer.flipX;
+    [SerializeField] private float _atkCool;
+    private float _currentTime;
+    private bool _canAtk = true;
 
     private void Awake()
     {
@@ -38,14 +42,29 @@ public class PlayerAttack : NetworkBehaviour
 
     private void HandleAttack()
     {
-        if (_playerState.IsOnJump || _playerState.IsOnAttack) return;
+        if (_playerState.IsOnJump || _playerState.IsOnAttack || !_canAtk) return;
+        _canAtk = false;
 
+        AudioManager.Instance.PlaySFX(SFXType.swipe);
         _playerAnimation.SetAtk(true);
     }
     
     public void AttackEndEvent()
     {
         _playerAnimation.SetAtk(false);
+    }
+
+    private void FixedUpdate()
+    {
+        if (_canAtk) return;
+
+        _currentTime += Time.deltaTime;
+
+        if(_currentTime >= _atkCool)
+        {
+            _currentTime = 0;
+            _canAtk = true;
+        }
     }
 
     public void AttackLogic()
@@ -83,6 +102,8 @@ public class PlayerAttack : NetworkBehaviour
     [ClientRpc]
     private void MakeFeedbackClientRpc()
     {
+        AudioManager.Instance.PlaySFX(SFXType.hit);
+
         FeedbackManager.Instance.ShaekScreen(new Vector3(0.1f, 0.1f, 0));
         FeedbackManager.Instance.StopTime(0.02f, 0.3f);
     }

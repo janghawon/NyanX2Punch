@@ -122,7 +122,6 @@ public class PlayerAnimation : NetworkBehaviour
     #region JumpLogic
     public void SetJump(bool value)
     {
-        Debug.Log(value);
         if(_jumpValue.Value != value)
         {
             SetJumpValueServerRpc(value);

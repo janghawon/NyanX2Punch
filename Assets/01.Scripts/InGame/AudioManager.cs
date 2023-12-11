@@ -15,7 +15,8 @@ public enum SFXType
     btnsound,
     hit,
     jump,
-    swipe
+    swipe,
+    gogogo
 }
 
 public class AudioManager : MonoBehaviour
@@ -27,6 +28,8 @@ public class AudioManager : MonoBehaviour
 
     [SerializeField] private AudioSource _sfxSource;
     [SerializeField] private AudioSource _bgmSource;
+
+    public AudioSource bgmSource => _bgmSource;
 
     private bool _isBgmPlaying;
 
@@ -51,8 +54,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(SFXType type)
     {
-        AudioSource source = new AudioSource();
-        source.clip = _sfxClipList[(int)type];
-        source.Play();
+        _sfxSource.PlayOneShot(_sfxClipList[(int)type]);
     }
 }
