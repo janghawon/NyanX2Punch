@@ -21,7 +21,7 @@ public class PlayerDie : NetworkBehaviour
     public void DieClientRpc(bool isHost, Vector3 dir)
     {
         FeedbackManager.Instance.ShaekScreen(new Vector3(0.2f, 0.2f, 0));
-        FeedbackManager.Instance.StopTime(1f);
+        FeedbackManager.Instance.StopTime(0.5f, 0.2f);
 
         if (IsHost == isHost) return;
 

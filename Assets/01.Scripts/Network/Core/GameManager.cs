@@ -170,42 +170,23 @@ public class GameManager : NetworkBehaviour
 
     
     [ServerRpc(RequireOwnership = false)]
-    public void HandleGameExitServerRpc(ulong clientID)
+    public void HandleGameExitServerRpc()
     {
         string lobbyID = HostSingleton.Instnace.GamaManager.lobbyID;
-        GameExitClientRpc(clientID, lobbyID);
-    }
-
-    [ClientRpc]
-    private void GameExitClientRpc(ulong clientID, string lobbyID)
-    {
-        if (clientID != OwnerClientId) return;
-
         HandleGameExitAsync(lobbyID);
     }
-    
+
     private async void HandleGameExitAsync(string lobbyID)
     {
-        if (myGameRole == GameRole.Host)
-        {
-            await Lobbies.Instance.DeleteLobbyAsync(lobbyID);
+        await Lobbies.Instance.DeleteLobbyAsync(lobbyID);
 
-            ExitPlayerClientRpc();
-        }
-        else
-        {
-            Debug.Log("Im client");
-            string playerId = AuthenticationService.Instance.PlayerId;
-            _gameReady.RemoveClientPanelServerRpc();
-            await Lobbies.Instance.RemovePlayerAsync(lobbyID, playerId);
-            SceneManager.LoadScene(SceneList.MenuScene);
-        }
+        ExitPlayerClientRpc();
     }
 
     [ClientRpc]
     private void ExitPlayerClientRpc()
     {
-        SceneManager.LoadScene(SceneList.MenuScene);
+        Application.Quit();
     }
 
     private void SpawnPlayers()

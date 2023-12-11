@@ -23,6 +23,7 @@ public class RoomManagement : MonoBehaviour
     [SerializeField] private Transform _content;
     [SerializeField] private Button _refreshBtn;
     [SerializeField] private GameObject _loadingUI;
+    [SerializeField] private GameObject _rejectPlayerUI;
 
     private Room _myRoom;
 
@@ -36,7 +37,13 @@ public class RoomManagement : MonoBehaviour
 
     private async void HandleJoinToRoom(Lobby room)
     {
+        if(room.Players.Count >= 2)
+        {
+            Instantiate(_rejectPlayerUI, _canvasTrm);
+        }
+
         if (_isJoinWaiting) return;
+
         var load = Instantiate(_loadingUI, _canvasTrm);
         _isJoinWaiting = true;
         try

@@ -59,31 +59,31 @@ public class PlayerAttack : NetworkBehaviour
 
             if (collider.TryGetComponent<PlayerHealth>(out PlayerHealth ph))
             {
-                _gameBar.OnChangeGameBarValueServerRpc(_atkValue, OwnerClientId);
                 Vector3 dir = (ph.hitTrm.position - transform.position).normalized;
                 if ((dir.x >= 0 && !_isLookRight) || (dir.x < 0 && _isLookRight)) return;
 
+                _gameBar.OnChangeGameBarValueServerRpc(_atkValue, OwnerClientId);
+
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-                MakeFeedbackServerRpc(dir, ph.hitTrm.position, angle);
+                MakeFeedbackServerRpc(ph.hitTrm.position, angle);
                 ph.Hit(dir);
             }
         }
     }
 
     [ServerRpc]
-    private void MakeFeedbackServerRpc(Vector3 dir, Vector3 pos, float angle)
+    private void MakeFeedbackServerRpc(Vector3 pos, float angle)
     {
-        MakeFeedbackClientRpc(pos, angle);
+        FeedbackManager.Instance.MakeFxClientRpc(FXType.impact, pos, Quaternion.Euler(0, 0, angle));
+        FeedbackManager.Instance.MakeFxClientRpc(FXType.spark, pos);
+        MakeFeedbackClientRpc();
     }
 
     [ClientRpc]
-    private void MakeFeedbackClientRpc(Vector3 pos, float angle)
+    private void MakeFeedbackClientRpc()
     {
-        FeedbackManager.Instance.MakeFxServerRpc(FXType.impact, pos, Quaternion.Euler(0, 0, angle));
-        FeedbackManager.Instance.MakeFxServerRpc(FXType.spark, pos);
-
         FeedbackManager.Instance.ShaekScreen(new Vector3(0.1f, 0.1f, 0));
-        FeedbackManager.Instance.StopTime(0.02f);
+        FeedbackManager.Instance.StopTime(0.02f, 0.3f);
     }
 }

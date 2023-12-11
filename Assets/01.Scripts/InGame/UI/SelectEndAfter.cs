@@ -44,7 +44,7 @@ public class SelectEndAfter : NetworkBehaviour
 
     public void ExitGame()
     {
-        GameManager.Instance.HandleGameExitServerRpc(OwnerClientId);
+        GameManager.Instance.HandleGameExitServerRpc();
     }
 
     public void GameSet()

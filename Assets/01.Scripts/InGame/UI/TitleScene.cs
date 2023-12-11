@@ -14,6 +14,7 @@ public class TitleScene : MonoBehaviour
         _isLoadingComplete = true;
         _loadingText.text = "Press AnyKey To Start!!";
         _loadingText.transform.localPosition = new Vector3(0, _loadingText.transform.localPosition.y);
+        AudioManager.Instance.PlayBGM(BGMType.title);
     }
 
     private void Update()

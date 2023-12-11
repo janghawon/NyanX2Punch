@@ -22,6 +22,9 @@ public class FeedbackManager : NetworkBehaviour
     [SerializeField] private CinemachineImpulseSource _source;
     [SerializeField] private CinemachineFollowZoom _zoom;
 
+    private Coroutine _timeStopCo;
+    private bool _isInTimelerp;
+
     private void Awake()
     {
         Instance = this;
@@ -34,7 +37,7 @@ public class FeedbackManager : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void MakeFxClientRpc(FXType type, Vector2 pos)
+    public void MakeFxClientRpc(FXType type, Vector2 pos)
     {
         Instantiate(_effectList[(int)type], pos, Quaternion.identity);
     }
@@ -46,7 +49,7 @@ public class FeedbackManager : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void MakeFxClientRpc(FXType type, Vector2 pos, Quaternion rot)
+    public void MakeFxClientRpc(FXType type, Vector2 pos, Quaternion rot)
     {
         Instantiate(_effectList[(int)type], pos, rot);
     }
@@ -57,15 +60,23 @@ public class FeedbackManager : NetworkBehaviour
         _source.GenerateImpulse();
     }
 
-    public void StopTime(float sec)
+    public void StopTime(float sec, float value)
     {
-        StartCoroutine(StopTimeCo(sec));
+        if(_isInTimelerp)
+        {
+            StopCoroutine(_timeStopCo);
+            Time.timeScale = 1;
+        }
+
+        _isInTimelerp = true;
+        _timeStopCo = StartCoroutine(StopTimeCo(sec, value));
     }
 
-    IEnumerator StopTimeCo(float sec)
+    IEnumerator StopTimeCo(float sec, float value)
     {
-        Time.timeScale = 0.3f;
+        Time.timeScale = value;
         yield return new WaitForSeconds(sec);
+        _isInTimelerp = false;
         Time.timeScale = 1;
     }
 

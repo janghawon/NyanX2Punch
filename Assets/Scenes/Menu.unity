@@ -1314,6 +1314,7 @@ MonoBehaviour:
   _content: {fileID: 1589613259}
   _refreshBtn: {fileID: 2029385531}
   _loadingUI: {fileID: 6621197096402724556, guid: 9ff5dab217911414283714b95af49eb0, type: 3}
+  _rejectPlayerUI: {fileID: 6897636901628422780, guid: 7e3ad8c903bfc4a47a5965ff5f83b133, type: 3}
 --- !u!4 &1229703330
 Transform:
   m_ObjectHideFlags: 0
@@ -1679,10 +1680,10 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1068372443}
-  - {fileID: 373296560}
   - {fileID: 525067446}
   - {fileID: 1409004765}
+  - {fileID: 1068372443}
+  - {fileID: 373296560}
   m_Father: {fileID: 1577569151}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

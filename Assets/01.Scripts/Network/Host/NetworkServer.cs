@@ -97,7 +97,6 @@ public class NetworkServer : IDisposable
         var player = GameObject.Instantiate(_playerPrefab, position, Quaternion.identity);
         player.SpawnAsPlayerObject(clientID);
         playerList.Add(player);
-
     }
 
     public void DestroyAllPlayer()
@@ -106,5 +105,6 @@ public class NetworkServer : IDisposable
         {
             GameObject.Destroy(p.gameObject);
         }
+        playerList.Clear();
     }
 }

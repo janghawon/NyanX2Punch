@@ -20,7 +20,7 @@ public class GameBar : NetworkBehaviour
     [SerializeField] private string _loseText;
     private bool _isGameEnd;
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void ResetGameBarvalueServerRpc()
     {
         clientValue.Value = 500;

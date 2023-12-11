@@ -26,13 +26,10 @@ public class GameConnectManager : NetworkBehaviour
         _gameBar.ResetGameBarvalueServerRpc();
     }
 
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void UnSetPlayerServerRpc()
     {
-        foreach(NetworkObject n in HostSingleton.Instnace.GamaManager.NetServer.playerList)
-        {
-            n.Despawn(false);
-        }
+        HostSingleton.Instnace.GamaManager.NetServer.DestroyAllPlayer();
     }
 
     public void GameEndTurmSet(float sec)
