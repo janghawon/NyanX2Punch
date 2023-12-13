@@ -61,7 +61,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (_playerState.IsOnDie || !canMovement) return;
+        if (_playerState.IsOnAttack || _playerState.IsOnDie || !canMovement) return;
 
         _playerAnimation.SetMove(prevpos.x - transform.position.x);
         _playerAnimation.FlipController();

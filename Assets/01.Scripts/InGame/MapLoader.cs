@@ -33,13 +33,17 @@ public class MapLoader : NetworkBehaviour
             _mapObjArr[i].SetActive(false);
         }
     }
-    public override void OnNetworkSpawn()
+
+    private void Start()
     {
-        if(IsHost)
-        {
-            MapType mt = HostSingleton.Instnace.GamaManager.selectMapType;
-            LoadMapClientRpc(mt);
-        }
+        LoadMapServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void LoadMapServerRpc()
+    {
+        MapType mt = HostSingleton.Instnace.GamaManager.selectMapType;
+        LoadMapClientRpc(mt);
     }
 
     [ClientRpc]

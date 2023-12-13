@@ -167,7 +167,7 @@ public class GameManager : NetworkBehaviour
 
     public bool GameStart()
     {
-        if (!IsHost || _alreadyGameStart) return false;
+        if (!IsHost || _alreadyGameStart || players.Count < 2) return false;
 
         for(int i = 0; i < players.Count; i++)
         {

@@ -66,7 +66,7 @@ public class GameBar : NetworkBehaviour
         }
         else
         {
-            _finalText.gameObject.SetActive(false);
+            ResetFinalTextClientRpc();
         }
     }
 

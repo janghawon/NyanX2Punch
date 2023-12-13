@@ -23,7 +23,7 @@ public class HostGameManager : IDisposable
     public event Action<string, ulong> OnPlayerConnect;
     public event Action<string, ulong> OnPlayerDisconnect;
 
-    public MapType selectMapType;
+    public MapType selectMapType = MapType.desert;
 
     private NetworkObject _playPrefab;
 
